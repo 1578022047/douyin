@@ -1,0 +1,1 @@
+include ':app', ':video_compressor', ':video_effect', ':video_record'

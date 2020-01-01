@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBlack">#161823</color>
+    <color name="colorTextViewNormal">#9e9e9f</color>
+    <color name="colorBottomBlack">#010102</color>
+    <color name="colorTopBlack">#161823</color>
+    <color name="colorTopBlackLine">#282a34</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorButtonBackground">#393a44</color>
+    <color name="colorHuoZan">#8b8c91</color>
+    <color name="colorYellow">#face15</color>
+    <color name="colorPrimary">#fafafa</color>
+
+    <color name="colorPrimaryDark">#c7c7c7</color>
+
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="purple">#E040FB</color>
+
+    <color name="cccccc">#cccccc</color>
+
+    <color name="ff7f000000">#7f000000</color>
+
+    <color name="f4d4d4d">#4d4d4d</color>
+
+    <color name="ff666666">#666666</color>
+
+    <color name="alpha_white_70">#4Dffffff</color>
+</resources>

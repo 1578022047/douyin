@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorTopBlack">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="155px"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/colorTopBlack">
+        <LinearLayout
+            android:id="@+id/top_relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:gravity="center"
+            >
+            <TextView
+                android:textColor="@color/colorWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="@string/tongcheng"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorTopBlackLine" />
+    </LinearLayout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTopBlack"
+        android:gravity="center">
+        <!--    gravity表示内部的控件居中显示-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50dp"
+            android:textColor="@color/colorWhite"
+            android:text="@string/tongcheng"/>
+    </LinearLayout>
+</LinearLayout>

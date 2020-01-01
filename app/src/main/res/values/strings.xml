@@ -1,0 +1,11 @@
+<resources>
+    <string name="topHeightPx">155px</string>
+    <string name="bottomHeightPx">175px</string>
+    <string name="app_name">抖音</string>
+    <string name="index">首页</string>
+    <string name="tongcheng">同城</string>
+    <string name="message">消息</string>
+    <string name="me">我</string>
+    <string name="help">帮助</string>
+    <string name="in_process">正在处理...</string>
+</resources>
