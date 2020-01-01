@@ -169,27 +169,27 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:layout_margin="20dp"
+                    android:orientation="vertical"
                     >
                     <com.google.android.material.tabs.TabLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:tabTextColor="@color/colorHuoZan"
-                        app:tabGravity="fill"
-                        app:tabMaxWidth="0dp"
+                        android:layout_height="wrap_content"
                         app:tabMode="fixed"
+                        app:tabTextColor="@color/colorHuoZan"
                         app:tabSelectedTextColor="@color/colorWhite"
                         app:tabIndicatorColor="@color/colorYellow"
                         android:id="@+id/tab_layout"/>
                     <androidx.viewpager.widget.ViewPager
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="180dp"
                         android:id="@+id/view_pager"/>
                 </LinearLayout>
 
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView

@@ -10,28 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dou.MainActivity;
 import com.example.dou.R;
-import com.example.dou.adapter.ZuopingAdapter;
-import com.example.dou.recycler_pojo.ZuopingPojo;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ViewPagerVideoFragment extends Fragment {
+public class ViewPagerFansFragment extends Fragment {
 
     private String title;
     private String content;
     private View view;
-    private List<ZuopingPojo> zuopingPojoList = new ArrayList<>();
 
     private final static String TAG = "ViewPagerVideoFragment";
 
 
-    public ViewPagerVideoFragment(final String title, final String content) {
+    public ViewPagerFansFragment(final String title, final String content) {
         this.title = title;
         this.content = content;
     }
@@ -39,7 +31,6 @@ public class ViewPagerVideoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -53,19 +44,14 @@ public class ViewPagerVideoFragment extends Fragment {
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RecyclerView zuoping= view.findViewById(R.id.zuoping_recycler);
-        initData();
-
-        ZuopingAdapter zuopingAdapter = new ZuopingAdapter(zuopingPojoList);
-        GridLayoutManager grid = new GridLayoutManager(getActivity(),3);
-        zuoping.setLayoutManager(grid);
-        zuoping.setAdapter(zuopingAdapter);
-    }
-
-    private void initData() {
-        for (int i=1;i<=20;i++){
-            zuopingPojoList.add(new ZuopingPojo(R.drawable.fruit,i+"w"));
+        TextView textView = ((MainActivity)getActivity()).findViewById(R.id.text);
+        if (textView==null){
+            Log.e(TAG,"失败");
         }
+        else {
+            Log.e(TAG,textView.getText().toString());
+        }
+        textView.setText(content);
     }
 
     public String getTitle() {

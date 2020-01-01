@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter=new FragmentAdapter(getSupportFragmentManager(),list);
         mainPager.setAdapter(adapter);
         mainPager.setCurrentItem(0);
+        mainPager.setOffscreenPageLimit(4);
     }
 
     private void initListener() {

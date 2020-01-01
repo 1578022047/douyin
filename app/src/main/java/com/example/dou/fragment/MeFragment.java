@@ -45,12 +45,23 @@ public class MeFragment extends Fragment {
         viewPagerVideoFragments.add(new ViewPagerVideoFragment("作品","neirong1"));
         viewPagerVideoFragments.add(new ViewPagerVideoFragment("动态","neirong2"));
         viewPagerVideoFragments.add(new ViewPagerVideoFragment("喜欢","neirong3"));
+
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_me,container,false);
+
+        tabLayout = view.findViewById(R.id.tab_layout);
+        viewPager = view.findViewById(R.id.view_pager);
+        //        设置viewpager适配器，以及添加适配器数据
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(),viewPagerVideoFragments);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
+        viewPager.setOffscreenPageLimit(3);
+        tabLayout.setupWithViewPager(viewPager);
+//        这个属性在xml中设置是一样的
         return view;
     }
 
@@ -62,21 +73,13 @@ public class MeFragment extends Fragment {
         drawerLayout = mainActivity.findViewById(R.id.drawer);
         toolbar = mainActivity.findViewById(R.id.toolbar);
         toolbarLayout = mainActivity.findViewById(R.id.collaps);
-        tabLayout = mainActivity.findViewById(R.id.tab_layout);
-        viewPager = mainActivity.findViewById(R.id.view_pager);
+
 
 //        设置自定义的toolbar
         mainActivity.setSupportActionBar(toolbar);
         ActionBar actionBar = mainActivity.getSupportActionBar();
         toolbarLayout.setTitle("我");
 
-//        设置viewpager适配器，以及添加适配器数据
-        ViewPagerAdapter adapter = new ViewPagerAdapter(mainActivity.getSupportFragmentManager(),viewPagerVideoFragments);
-
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-//        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-//        这个属性在xml中设置是一样的
         System.out.println("XXXXXXXXXXXXXXXX:"+viewPagerVideoFragments.size());
     }
 
