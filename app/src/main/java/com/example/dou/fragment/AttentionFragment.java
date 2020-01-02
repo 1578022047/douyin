@@ -1,11 +1,9 @@
 package com.example.dou.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,9 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dou.MainActivity;
 import com.example.dou.R;
-import com.example.dou.RecordActivity;
 import com.example.dou.RecyclerViewPageChangeListenerHelper;
 import com.example.dou.VideoAdapter;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;

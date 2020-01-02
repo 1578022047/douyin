@@ -1,4 +1,4 @@
-package com.example.dou;
+package com.example.dou.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

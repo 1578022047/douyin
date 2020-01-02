@@ -1,11 +1,9 @@
 package com.example.dou.viewpage;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dou.MainActivity;
 import com.example.dou.R;
 import com.example.dou.adapter.ZuopingAdapter;
 import com.example.dou.recycler_pojo.ZuopingPojo;

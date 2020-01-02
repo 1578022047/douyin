@@ -1,4 +1,4 @@
-package com.example.dou;
+package com.example.dou.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dou.R;
 import com.example.dou.utils.HttpUtil;
 import com.google.android.material.snackbar.Snackbar;
 

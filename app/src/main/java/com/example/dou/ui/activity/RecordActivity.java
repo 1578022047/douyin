@@ -1,4 +1,4 @@
-package com.example.dou;
+package com.example.dou.ui.activity;
 
 
 import android.Manifest;
@@ -6,11 +6,10 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.dou.R;
 import com.example.dou.base.BaseActivity;
 
 import com.example.dou.helper.ToolbarHelper;
-import com.example.dou.ui.activity.VideoAlbumActivity;
-import com.example.dou.ui.activity.VideoCameraActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.reactivex.Observer;

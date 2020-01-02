@@ -1,4 +1,4 @@
-package com.example.dou;
+package com.example.dou.ui.activity;
 
 
 
@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.dou.view.NoScrollViewPager;
+import com.example.dou.R;
 import com.example.dou.fragment.FragmentAdapter;
 import com.example.dou.fragment.IndexFragment;
 import com.example.dou.fragment.MeFragment;

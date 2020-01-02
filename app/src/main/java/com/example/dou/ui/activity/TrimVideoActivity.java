@@ -232,24 +232,24 @@ public class TrimVideoActivity extends BaseActivity implements View.OnClickListe
 
         addEffectView();
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_trim_tab: //裁切tab
-                mViewTrimIndicator.setVisibility(View.VISIBLE);
-                mViewEffectIndicator.setVisibility(View.GONE);
-                mLlTrimContainer.setVisibility(View.VISIBLE);
-                mHsvEffect.setVisibility(View.GONE);
-                break;
-            case R.id.ll_effect_tab: //滤镜tab
-                mViewTrimIndicator.setVisibility(View.GONE);
-                mViewEffectIndicator.setVisibility(View.VISIBLE);
-                mLlTrimContainer.setVisibility(View.GONE);
-                mHsvEffect.setVisibility(View.VISIBLE);
-                break;
-        }
-    }
+//
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.ll_trim_tab: //裁切tab
+//                mViewTrimIndicator.setVisibility(View.VISIBLE);
+//                mViewEffectIndicator.setVisibility(View.GONE);
+//                mLlTrimContainer.setVisibility(View.VISIBLE);
+//                mHsvEffect.setVisibility(View.GONE);
+//                break;
+//            case R.id.ll_effect_tab: //滤镜tab
+//                mViewTrimIndicator.setVisibility(View.GONE);
+//                mViewEffectIndicator.setVisibility(View.VISIBLE);
+//                mLlTrimContainer.setVisibility(View.GONE);
+//                mHsvEffect.setVisibility(View.VISIBLE);
+//                break;
+//        }
+//    }
 
     /**
      * 动态添加滤镜效果View
@@ -689,6 +689,26 @@ public class TrimVideoActivity extends BaseActivity implements View.OnClickListe
     }
 
     private final MainHandler mUIHandler = new MainHandler(this);
+
+    @Override
+    public void onClick(final View v) {
+        switch (v.getId()) {
+            case R.id.ll_trim_tab: //裁切tab
+                System.out.println("xxxxxxxxxxxxxxxcaiqie");
+                mViewTrimIndicator.setVisibility(View.VISIBLE);
+                mViewEffectIndicator.setVisibility(View.GONE);
+                mLlTrimContainer.setVisibility(View.VISIBLE);
+                mHsvEffect.setVisibility(View.GONE);
+                break;
+            case R.id.ll_effect_tab: //滤镜tab
+
+                mViewTrimIndicator.setVisibility(View.GONE);
+                mViewEffectIndicator.setVisibility(View.VISIBLE);
+                mLlTrimContainer.setVisibility(View.GONE);
+                mHsvEffect.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
 
     private static class MainHandler extends Handler {
 

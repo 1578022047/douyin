@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.dou.MainActivity;
+import com.example.dou.ui.activity.MainActivity;
 import com.example.dou.R;
 
 public class ViewPagerFansFragment extends Fragment {
