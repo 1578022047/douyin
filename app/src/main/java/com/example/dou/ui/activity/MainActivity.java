@@ -8,14 +8,16 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 import androidx.fragment.app.Fragment;
 
+import com.example.dou.adapter.IndexFragmentAdapter;
 import com.example.dou.view.NoScrollViewPager;
 import com.example.dou.R;
-import com.example.dou.fragment.FragmentAdapter;
+import com.example.dou.adapter.FragmentAdapter;
 import com.example.dou.fragment.IndexFragment;
 import com.example.dou.fragment.MeFragment;
 import com.example.dou.fragment.MessageFragment;
@@ -25,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private FragmentAdapter adapter;
+    private IndexFragmentAdapter adapter;
     private List<Fragment> list;
     private NoScrollViewPager mainPager;
     private ImageView add;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tongcheng_textview;
     private TextView message_textview;
     private TextView me_textview;
+    private LinearLayout linearLayout;
     //        初始化fragment，只new一次fragment增强效率
 
     @Override
@@ -43,7 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initView();
         initListener();
         init();
-        message_textview.setTextColor(Color.WHITE);
+        index_textview.setTextColor(Color.WHITE);
+        linearLayout.getBackground().setAlpha(0);
 
     }
 
@@ -53,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         list.add(new TongchengFragment());
         list.add(new MessageFragment());
         list.add(new MeFragment());
-        adapter=new FragmentAdapter(getSupportFragmentManager(),list);
+        adapter=new IndexFragmentAdapter(getSupportFragmentManager(),list);
         mainPager.setAdapter(adapter);
         mainPager.setCurrentItem(0);
         mainPager.setOffscreenPageLimit(4);
@@ -68,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
+        linearLayout = findViewById(R.id.line);
         mainPager=findViewById(R.id.main_pager);
         add=findViewById(R.id.add);
         index_textview = findViewById(R.id.index);
@@ -84,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.index:
                 mainPager.setCurrentItem(0);
+                linearLayout.getBackground().setAlpha(0);
                 index_textview.setTextColor(Color.WHITE);
                 tongcheng_textview.setTextColor(Color.parseColor("#9e9e9f"));
                 message_textview.setTextColor(Color.parseColor("#9e9e9f"));
@@ -91,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.tongcheng:
                 mainPager.setCurrentItem(1);
+                linearLayout.getBackground().setAlpha(255);
                 tongcheng_textview.setTextColor(Color.WHITE);
                 index_textview.setTextColor(Color.parseColor("#9e9e9f"));
                 message_textview.setTextColor(Color.parseColor("#9e9e9f"));
@@ -99,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.message:
                 isLogin();
                 mainPager.setCurrentItem(2);
+                linearLayout.getBackground().setAlpha(255);
                 message_textview.setTextColor(Color.WHITE);
                 index_textview.setTextColor(Color.parseColor("#9e9e9f"));
                 tongcheng_textview.setTextColor(Color.parseColor("#9e9e9f"));
@@ -108,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                进入个人主页首先需要判断是否登陆
                 isLogin();
                 mainPager.setCurrentItem(3);
-
+                linearLayout.getBackground().setAlpha(255);
                 /*Toolbar toolbar = findViewById(R.id.toolbar);
                 CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collaps);
                 setSupportActionBar(toolbar);

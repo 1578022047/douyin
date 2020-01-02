@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorTopBlack"
-    android:gravity="center">
+    android:gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <!--    gravity表示内部的控件居中显示-->
     <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/viewPager"/>
-</LinearLayout>
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:background="#00000000"
+        >
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabSelectedTextColor="@color/colorWhite"
+            app:tabIndicatorColor="@color/colorWhite"
+            app:tabTextColor="@color/colorHuoZan"
+            android:id="@+id/index_tablayout"
+            />
+    </LinearLayout>
+</RelativeLayout>

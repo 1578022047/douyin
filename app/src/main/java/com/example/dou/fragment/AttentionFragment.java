@@ -15,16 +15,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dou.R;
 import com.example.dou.RecyclerViewPageChangeListenerHelper;
 import com.example.dou.VideoAdapter;
+import com.example.dou.viewpage.AddMethodFragment;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttentionFragment extends Fragment {
+public class AttentionFragment extends AddMethodFragment {
     RecyclerView videoList;
     List<String> urls;
     LinearLayoutManager layoutManager;
+    private String title;
     int curPosition=0;
+
+    public String getTitle() {
+        return "关注";
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

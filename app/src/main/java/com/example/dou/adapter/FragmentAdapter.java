@@ -1,16 +1,19 @@
-package com.example.dou.fragment;
+package com.example.dou.adapter;
 
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.dou.viewpage.AddMethodFragment;
+
 import java.util.List;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
-    private List<Fragment> list;
+    private List<AddMethodFragment> list;
 
-    public FragmentAdapter(FragmentManager fm, List<Fragment> list) {
+    public FragmentAdapter(FragmentManager fm, List<AddMethodFragment> list) {
         super(fm);
         this.list = list;
     }
@@ -27,5 +30,11 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return list.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(final int position) {
+        return list.get(position).getTitle();
     }
 }

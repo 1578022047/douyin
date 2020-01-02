@@ -57,7 +57,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             viewHolder.video.getBackButton().setVisibility(View.GONE);
             viewHolder.video.getTitleTextView().setVisibility(View.GONE);
             viewHolder.video.getFullscreenButton().setVisibility(View.GONE);
-            viewHolder.video.setDismissControlTime(1000);
+            viewHolder.video.setDismissControlTime(0);
             viewHolder.video.setNeedShowWifiTip(true);
             viewHolder.video.setUp(urls.get(i),true,urls.get(i));
             viewHolder.video.startPlayLogic();

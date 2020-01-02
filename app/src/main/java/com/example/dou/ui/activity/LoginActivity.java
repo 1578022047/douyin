@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.utils.HttpUtil;
 
@@ -85,6 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         @Override
                         public void run() {
                             Toast.makeText(LoginActivity.this,"电话号码或密码错误",Toast.LENGTH_SHORT).show();
+
                         }
                     }));
                 }
