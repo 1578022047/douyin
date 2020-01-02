@@ -25,7 +25,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:visibility="gone"
+    android:visibility="visible"
     android:src="@drawable/ic_chat_play"/>
 
+  <Button
+      android:id="@+id/nestStep"
+      android:layout_width="match_parent"
+      android:layout_height="150dp"
+      android:layout_gravity="bottom|center"
+      android:visibility="visible"
+      android:text="下一步"
+      android:textColor="#FFFFFF"
+      android:layout_marginBottom="10dp"
+      android:background="@color/colorAccent"/>
 </FrameLayout>

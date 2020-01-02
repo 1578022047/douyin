@@ -1,10 +1,17 @@
 package com.example.dou.utils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 
 import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class HttpUtil {
 
@@ -26,5 +33,45 @@ public class HttpUtil {
                 .build();
         client.newCall(request).enqueue(callback);
     }
+
+    //上传视频
+    public static void uploadVideoHttp(String address,String filePath,String videoJson, String fileName, okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", fileName,
+                        RequestBody.create(MediaType.parse("multipart/form-data"), new File(filePath)))
+                .addFormDataPart("video",videoJson)
+                .build();
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+
+
+    //获取五个视频
+    public static void getFiveVideoHttp(String address,okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder requestBody = new FormBody.Builder();
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //获取用户视频
+    public static void getUserVideoHttp(String address,String userId,okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("userId",userId);
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+
 
 }

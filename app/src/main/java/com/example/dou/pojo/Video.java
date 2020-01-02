@@ -3,18 +3,36 @@ package com.example.dou.pojo;
 
 public class Video {
 
-  private long videoId;
+  private Integer videoId;
   private String userId;
-  private long likeNum;
-  private long remarkNum;
+  private Integer likeNum;
+  private Integer remarkNum;
   private String describe;
 
+  @Override
+  public String toString() {
+    return "Video{" +
+            "videoId=" + videoId +
+            ", userId='" + userId + '\'' +
+            ", likeNum=" + likeNum +
+            ", remarkNum=" + remarkNum +
+            ", describe='" + describe + '\'' +
+            '}';
+  }
 
-  public long getVideoId() {
+  public Video(Integer videoId, String userId, Integer likeNum, Integer remarkNum, String describe) {
+    this.videoId = videoId;
+    this.userId = userId;
+    this.likeNum = likeNum;
+    this.remarkNum = remarkNum;
+    this.describe = describe;
+  }
+
+  public Integer getVideoId() {
     return videoId;
   }
 
-  public void setVideoId(long videoId) {
+  public void setVideoId(Integer videoId) {
     this.videoId = videoId;
   }
 
@@ -28,20 +46,20 @@ public class Video {
   }
 
 
-  public long getLikeNum() {
+  public Integer getLikeNum() {
     return likeNum;
   }
 
-  public void setLikeNum(long likeNum) {
+  public void setLikeNum(Integer likeNum) {
     this.likeNum = likeNum;
   }
 
 
-  public long getRemarkNum() {
+  public Integer getRemarkNum() {
     return remarkNum;
   }
 
-  public void setRemarkNum(long remarkNum) {
+  public void setRemarkNum(Integer remarkNum) {
     this.remarkNum = remarkNum;
   }
 

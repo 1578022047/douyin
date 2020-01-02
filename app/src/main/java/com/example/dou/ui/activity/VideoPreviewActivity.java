@@ -10,15 +10,22 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.VideoView;
-import butterknife.BindView;
-import butterknife.OnClick;
 import com.bumptech.glide.Glide;
 import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.base.BaseActivity;
+import com.example.dou.pojo.Video;
+import com.example.dou.utils.HttpUtil;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 
 /**
@@ -34,6 +41,7 @@ public class VideoPreviewActivity extends BaseActivity {
     VideoView mVideoView;
     ImageView mIvThumb;
     ImageView mIvPlay;
+    Button nestStep;
 
     private String mVideoPath;
     private String mVideoThumb;
@@ -64,6 +72,26 @@ public class VideoPreviewActivity extends BaseActivity {
         mVideoView=findViewById(R.id.videoView);
         mIvThumb=findViewById(R.id.iv_thumb);
         mIvPlay=findViewById(R.id.iv_play);
+        nestStep=findViewById(R.id.nestStep);
+        String url="http://liuyishou.site:8002/uploadVideo";
+        nestStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Video video=new Video(null,"2",3,4,"5");
+                HttpUtil.uploadVideoHttp(url,mVideoPath,new Gson().toJson(video),"muVideo.mp4",new okhttp3.Callback(){
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        System.out.println("xxxxxxxxxxxxxxxxxshibai");
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        System.out.println("xxxxxxxxxxxxxxxxxxxchenggong");
+                    }
+                });
+            }
+        });
         mIvPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

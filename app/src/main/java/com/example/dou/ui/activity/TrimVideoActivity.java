@@ -91,6 +91,8 @@ public class TrimVideoActivity extends BaseActivity implements View.OnClickListe
     LinearLayout mLlTrimContainer;
     HorizontalScrollView mHsvEffect;
     LinearLayout mLlEffectContainer;
+    LinearLayout mLlEffectTab;
+    LinearLayout mLlTrimTab;
     private RangeSeekBar seekBar;
 
     private static final String TAG = TrimVideoActivity.class.getSimpleName();
@@ -187,7 +189,8 @@ public class TrimVideoActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void initView() {
-
+        mLlEffectTab=findViewById(R.id.ll_effect_tab);
+        mLlTrimTab=findViewById(R.id.ll_trim_tab);
         mSurfaceView=findViewById(R.id.glsurfaceview);
         mTvShootTip=findViewById(R.id.video_shoot_tip);
         mRecyclerView=findViewById(R.id.video_thumb_listview);
@@ -199,8 +202,8 @@ public class TrimVideoActivity extends BaseActivity implements View.OnClickListe
         mLlTrimContainer=findViewById(R.id.ll_trim_container);
         mHsvEffect=findViewById(R.id.hsv_effect);
         mLlEffectContainer=findViewById(R.id.ll_effect_container);
-        mLlTrimContainer.setOnClickListener(this);
-        mLlEffectContainer.setOnClickListener(this);
+        mLlEffectTab.setOnClickListener(this);
+        mLlTrimTab.setOnClickListener(this);
         mRecyclerView
             .setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         videoEditAdapter = new TrimVideoAdapter(this, mMaxWidth / 10);
@@ -694,7 +697,6 @@ public class TrimVideoActivity extends BaseActivity implements View.OnClickListe
     public void onClick(final View v) {
         switch (v.getId()) {
             case R.id.ll_trim_tab: //裁切tab
-                System.out.println("xxxxxxxxxxxxxxxcaiqie");
                 mViewTrimIndicator.setVisibility(View.VISIBLE);
                 mViewEffectIndicator.setVisibility(View.GONE);
                 mLlTrimContainer.setVisibility(View.VISIBLE);
