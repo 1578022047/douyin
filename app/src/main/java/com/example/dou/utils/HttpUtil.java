@@ -14,6 +14,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class HttpUtil {
+    public static String host = "http://192.168.43.129/";
 
     public static void sendGetHttpRequest(String address,okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();

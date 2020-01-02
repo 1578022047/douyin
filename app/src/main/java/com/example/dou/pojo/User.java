@@ -9,6 +9,16 @@ public class User {
   private String password;
   private String brief;
   private String birthday;
+  private String imageUrl;
+
+  public String getImageUrl() {
+    return imageUrl;
+  }
+
+  public void setImageUrl(final String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
+
   private long sex;
 
     public User() {

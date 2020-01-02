@@ -73,7 +73,8 @@ public class VideoPreviewActivity extends BaseActivity {
         mIvThumb=findViewById(R.id.iv_thumb);
         mIvPlay=findViewById(R.id.iv_play);
         nestStep=findViewById(R.id.nestStep);
-        String url="http://liuyishou.site:8002/uploadVideo";
+        String url=HttpUtil.host+"uploadVideo";
+        System.out.println(url);
         nestStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
