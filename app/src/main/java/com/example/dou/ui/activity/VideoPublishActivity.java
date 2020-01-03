@@ -79,7 +79,8 @@ public class VideoPublishActivity extends AppCompatActivity {
 
     private void init() {
         videoPath=getIntent().getStringExtra("path");
-        videoImage.setImageBitmap(getVideoThumbnail(videoPath,150,150,1));
+        bitmap=getVideoThumbnail(videoPath,150,150,1);
+        videoImage.setImageBitmap(bitmap);
     }
 
     private void initView() {
@@ -101,11 +102,11 @@ public class VideoPublishActivity extends AppCompatActivity {
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url="";
+                String url=HttpUtil.host+"uploadVideo";
                 ((App)getApplication()).setUser(new User("1","2","3","4","5","6",7));
                 User user=((App)getApplication()).getUser();
                 Video video=new Video(null,user.getUserId(),0,0,describe_edit.getText().toString(),null);
-                HttpUtil.uploadVideoHttp(url,videoPath,user.getName(),bitmap2File(bitmap, "my.jpg"),"my.jpg",new Gson().toJson(video), new Callback() {
+                HttpUtil.uploadVideoHttp(url,videoPath,user.getName(),bitmap2File(bitmap, "my"),"my.jpg",new Gson().toJson(video), new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         System.out.println("xxxxxxxxxxxxshibai");

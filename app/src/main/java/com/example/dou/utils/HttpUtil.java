@@ -15,7 +15,6 @@ import okhttp3.Response;
 
 public class HttpUtil {
     public static String host = "http://192.168.43.129/";
-
     public static void sendGetHttpRequest(String address,okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(address).build();
@@ -37,6 +36,8 @@ public class HttpUtil {
 
     //上传视频
     public static void uploadVideoHttp(String address,String videoPath, String videoName,String imagePath,String imageName,String videoJson, okhttp3.Callback callback){
+        System.out.println(imageName);
+        System.out.println(imagePath);
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
