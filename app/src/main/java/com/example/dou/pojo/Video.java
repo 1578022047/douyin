@@ -8,27 +8,30 @@ public class Video {
   private Integer likeNum;
   private Integer remarkNum;
   private String describe;
+  private String imageUrl;
 
-  @Override
-  public String toString() {
-    return "Video{" +
-            "videoId=" + videoId +
-            ", userId='" + userId + '\'' +
-            ", likeNum=" + likeNum +
-            ", remarkNum=" + remarkNum +
-            ", describe='" + describe + '\'' +
-            '}';
-  }
+    @Override
+    public String toString() {
+        return "Video{" +
+                "videoId=" + videoId +
+                ", userId='" + userId + '\'' +
+                ", likeNum=" + likeNum +
+                ", remarkNum=" + remarkNum +
+                ", describe='" + describe + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
+    }
 
-  public Video(Integer videoId, String userId, Integer likeNum, Integer remarkNum, String describe) {
-    this.videoId = videoId;
-    this.userId = userId;
-    this.likeNum = likeNum;
-    this.remarkNum = remarkNum;
-    this.describe = describe;
-  }
+    public Video(Integer videoId, String userId, Integer likeNum, Integer remarkNum, String describe, String imageUrl) {
+        this.videoId = videoId;
+        this.userId = userId;
+        this.likeNum = likeNum;
+        this.remarkNum = remarkNum;
+        this.describe = describe;
+        this.imageUrl = imageUrl;
+    }
 
-  public Integer getVideoId() {
+    public Integer getVideoId() {
     return videoId;
   }
 

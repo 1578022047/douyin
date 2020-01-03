@@ -18,14 +18,6 @@ import com.bumptech.glide.Glide;
 import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.base.BaseActivity;
-import com.example.dou.pojo.Video;
-import com.example.dou.utils.HttpUtil;
-import com.google.gson.Gson;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Response;
 
 
 /**
@@ -76,7 +68,7 @@ public class VideoPreviewActivity extends BaseActivity {
         nestStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(VideoPreviewActivity.this,VideoPublicActivity.class);
+                Intent intent=new Intent(VideoPreviewActivity.this, VideoPublishActivity.class);
                 intent.putExtra("path",mVideoPath);
                 startActivity(intent);
             }

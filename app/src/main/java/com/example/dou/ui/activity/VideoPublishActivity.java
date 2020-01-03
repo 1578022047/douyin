@@ -17,7 +17,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
@@ -27,26 +26,39 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.dou.App;
 import com.example.dou.R;
+import com.example.dou.pojo.User;
+import com.example.dou.pojo.Video;
+import com.example.dou.utils.HttpUtil;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class VideoPublicActivity extends AppCompatActivity {
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+public class VideoPublishActivity extends AppCompatActivity {
     Bitmap bitmap;
     ImageView videoImage;
     public static final int CHOOSE_PHOTO = 2;
     String videoPath;
     Toolbar toolbar;
+    EditText describe_edit;
+    Button publish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_public);
+        setContentView(R.layout.activity_video_publish);
         initView();
         init();
 
@@ -71,17 +83,39 @@ public class VideoPublicActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        publish=findViewById(R.id.publish);
+        describe_edit=findViewById(R.id.describe_edit);
         toolbar = findViewById(R.id.toolbar);
         videoImage=findViewById(R.id.video_image);
         videoImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(VideoPublicActivity.this,
+                if (ContextCompat.checkSelfPermission(VideoPublishActivity.this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(VideoPublicActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    ActivityCompat.requestPermissions(VideoPublishActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 } else {
                     openAlbum();
                 }
+            }
+        });
+        publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url="";
+                ((App)getApplication()).setUser(new User("1","2","3","4","5","6",7));
+                User user=((App)getApplication()).getUser();
+                Video video=new Video(null,user.getUserId(),0,0,describe_edit.getText().toString(),null);
+                HttpUtil.uploadVideoHttp(url,videoPath,user.getName(),bitmap2File(bitmap, "my.jpg"),"my.jpg",new Gson().toJson(video), new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        System.out.println("xxxxxxxxxxxxshibai");
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        System.out.println("xxxxxxxxxxxxxxxxchenggong");
+                    }
+                });
             }
         });
     }
@@ -130,9 +164,9 @@ public class VideoPublicActivity extends AppCompatActivity {
     //更换封面
     private void displayImage(final String imagePath) {       //显示图片
         if (imagePath != null) {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(VideoPublicActivity.this);
-            dialog.setTitle("更换头像");
-            dialog.setMessage("是否确定更换头像？");
+            AlertDialog.Builder dialog = new AlertDialog.Builder(VideoPublishActivity.this);
+            dialog.setTitle("更换封面");
+            dialog.setMessage("是否确定更换封面？");
             dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

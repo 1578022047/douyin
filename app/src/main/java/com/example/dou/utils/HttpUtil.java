@@ -36,12 +36,14 @@ public class HttpUtil {
     }
 
     //上传视频
-    public static void uploadVideoHttp(String address,String filePath,String videoJson, String fileName, okhttp3.Callback callback){
+    public static void uploadVideoHttp(String address,String videoPath, String videoName,String imagePath,String imageName,String videoJson, okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("file", fileName,
-                        RequestBody.create(MediaType.parse("multipart/form-data"), new File(filePath)))
+                .addFormDataPart("videoFile", videoName,
+                        RequestBody.create(MediaType.parse("multipart/form-data"), new File(videoPath)))
+                .addFormDataPart("imageFile", imageName,
+                        RequestBody.create(MediaType.parse("multipart/form-data"), new File(imagePath)))
                 .addFormDataPart("video",videoJson)
                 .build();
         Request request  =new Request.Builder().url(address)

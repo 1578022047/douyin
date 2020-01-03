@@ -5,7 +5,7 @@ public class User {
 
   private String userId;
   private String name;
-  private long phonenum;
+  private String phonenum;
   private String password;
   private String brief;
   private String birthday;
@@ -19,12 +19,12 @@ public class User {
     this.imageUrl = imageUrl;
   }
 
-  private long sex;
+  private Integer sex;
 
     public User() {
     }
 
-    public User(String userId, String name, long phonenum, String password, String brief, String birthday, long sex) {
+    public User(String userId, String name, String  phonenum, String password, String brief, String birthday, Integer sex) {
         this.userId = userId;
         this.name = name;
         this.phonenum = phonenum;
@@ -52,11 +52,11 @@ public class User {
   }
 
 
-  public long getPhonenum() {
+  public String getPhonenum() {
     return phonenum;
   }
 
-  public void setPhonenum(long phonenum) {
+  public void setPhonenum(String phonenum) {
     this.phonenum = phonenum;
   }
 
@@ -88,11 +88,11 @@ public class User {
   }
 
 
-  public long getSex() {
+  public Integer getSex() {
     return sex;
   }
 
-  public void setSex(long sex) {
+  public void setSex(Integer sex) {
     this.sex = sex;
   }
 
