@@ -115,6 +115,7 @@ public class VideoPreviewActivity extends BaseActivity {
                     .into(mIvThumb);
             }
         });
+        videoStart();
     }
 
 
