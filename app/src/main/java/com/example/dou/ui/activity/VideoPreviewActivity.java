@@ -73,24 +73,12 @@ public class VideoPreviewActivity extends BaseActivity {
         mIvThumb=findViewById(R.id.iv_thumb);
         mIvPlay=findViewById(R.id.iv_play);
         nestStep=findViewById(R.id.nestStep);
-        String url=HttpUtil.host+"uploadVideo";
-        System.out.println(url);
         nestStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Video video=new Video(null,"2",3,4,"5");
-                HttpUtil.uploadVideoHttp(url,mVideoPath,new Gson().toJson(video),"muVideo.mp4",new okhttp3.Callback(){
-
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        System.out.println("xxxxxxxxxxxxxxxxxshibai");
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        System.out.println("xxxxxxxxxxxxxxxxxxxchenggong");
-                    }
-                });
+                Intent intent=new Intent(VideoPreviewActivity.this,VideoPublicActivity.class);
+                intent.putExtra("path",mVideoPath);
+                startActivity(intent);
             }
         });
         mIvPlay.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +123,6 @@ public class VideoPreviewActivity extends BaseActivity {
                     .into(mIvThumb);
             }
         });
-        videoStart();
     }
 
 

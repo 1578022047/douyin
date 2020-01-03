@@ -2,15 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dou">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-    <uses-permission android:name="android.permission.CAMERA"/>
-
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -19,10 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.VerifyLogin2Activity"></activity>
+        <activity android:name=".ui.activity.VideoPublicActivity"></activity>
+        <activity android:name=".ui.activity.VerifyLogin2Activity" />
         <activity android:name=".ui.activity.VerifyLoginActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.MainActivity"
+        <activity
+            android:name=".ui.activity.MainActivity"
             android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,14 +29,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.RecordActivity"/>
-        <activity android:name=".ui.activity.VideoAlbumActivity" android:screenOrientation="portrait" android:configChanges="keyboard|orientation|screenSize"/>
-
-        <activity android:name=".ui.activity.VideoCameraActivity" android:screenOrientation="portrait" android:configChanges="keyboard|orientation|screenSize"/>
-
-        <activity android:name=".ui.activity.TrimVideoActivity" android:screenOrientation="portrait" android:configChanges="keyboard|orientation|screenSize" android:hardwareAccelerated="true"/>
-
-        <activity android:name=".ui.activity.VideoPreviewActivity" android:screenOrientation="portrait" android:configChanges="keyboard|orientation|screenSize" android:hardwareAccelerated="true"/>
+        <activity android:name=".ui.activity.RecordActivity" />
+        <activity
+            android:name=".ui.activity.VideoAlbumActivity"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.VideoCameraActivity"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.TrimVideoActivity"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.VideoPreviewActivity"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -480,7 +480,7 @@ public class TrimVideoActivity extends BaseActivity implements View.OnClickListe
 
                 @Override
                 public void onComplete() {
-                    Toast.makeText(TrimVideoActivity.this,"我已经成功上传到了服务器",Toast.LENGTH_LONG).show();
+
                 }
             });
     }
