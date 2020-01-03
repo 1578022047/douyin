@@ -1,9 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.VideoPublicActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:titleTextColor="@color/colorWhite"
+        android:id="@+id/toolbar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorTopBlackLine"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="20dp">
+
+        <EditText
+            android:id="@+id/describe_edit"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:background="@color/colorTopBlack"
+            android:gravity="left|top"
+            android:hint="写标题并使用合适的标题，能让更多人看到~"
+            android:textColorHint="@color/colorHuoZan"
+            android:textColor="@color/colorWhite"/>
+
+        <ImageView
+            android:id="@+id/video_image"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/describe_edit"
+            android:scaleType="center"
+            android:src="@drawable/fruit" />
+
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_alignLeft="@id/video_image"
+            android:layout_alignBottom="@id/video_image"
+            android:background="#508b8c91"
+            android:gravity="center"
+            android:text="选封面"
+            android:textColor="@color/colorWhite"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorTopBlackLine" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:text="添加位置"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_border"
+            android:padding="8dp"
+            android:text="欣欣鲜果园"
+            android:textColor="@color/colorHuoZan" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/textview_border"
+            android:padding="10dp"
+            android:text="欣欣鲜果园"
+            android:textColor="@color/colorHuoZan" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/textview_border"
+            android:padding="8dp"
+            android:text="欣欣鲜果园"
+            android:textColor="@color/colorHuoZan" />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:text="谁可以看"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="公开 >"
+            android:textColor="@color/colorHuoZan"
+            android:textSize="18sp"
+            android:layout_marginRight="40dp"
+            android:id="@+id/gongkai_text"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="20dp"
+            >
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorButtonBackground"
+                android:text="草稿"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textColor="@color/colorWhite"
+                android:background="@color/colorButtomRed"
+                android:text="发布"
+                android:gravity="center"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

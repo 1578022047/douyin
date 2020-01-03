@@ -2,7 +2,9 @@ package com.example.dou.ui.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -23,6 +25,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -37,6 +40,8 @@ public class VideoPublicActivity extends AppCompatActivity {
     Bitmap bitmap;
     ImageView videoImage;
     public static final int CHOOSE_PHOTO = 2;
+    String videoPath;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +49,30 @@ public class VideoPublicActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video_public);
         initView();
         init();
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull final MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void init() {
+        videoPath=getIntent().getStringExtra("path");
+        videoImage.setImageBitmap(getVideoThumbnail(videoPath,150,150,1));
     }
 
     private void initView() {
+        toolbar = findViewById(R.id.toolbar);
+        videoImage=findViewById(R.id.video_image);
         videoImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
