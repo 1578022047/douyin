@@ -7,19 +7,28 @@ public class Video {
   private String userId;
   private Integer likeNum;
   private Integer remarkNum;
-  private String describe;
-  private String imageUrl;
-  private String videoUrl;
+  private String info;
 
-  public Video(Integer videoId, String userId, Integer likeNum, Integer remarkNum, String describe, String imageUrl, String videoUrl) {
+  public String getInfo() {
+    return info;
+  }
+
+  public Video(final Integer videoId, final String userId, final Integer likeNum, final Integer remarkNum, final String info, final String imageUrl ,final String videoUrl) {
     this.videoId = videoId;
     this.userId = userId;
     this.likeNum = likeNum;
     this.remarkNum = remarkNum;
-    this.describe = describe;
+    this.info = info;
     this.imageUrl = imageUrl;
     this.videoUrl = videoUrl;
   }
+
+  public void setInfo(final String info) {
+    this.info = info;
+  }
+
+  private String imageUrl;
+  private String videoUrl;
 
   public String getImageUrl() {
     return imageUrl;
@@ -44,7 +53,7 @@ public class Video {
             ", userId='" + userId + '\'' +
             ", likeNum=" + likeNum +
             ", remarkNum=" + remarkNum +
-            ", describe='" + describe + '\'' +
+            ", info='" + info + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", videoUrl='" + videoUrl + '\'' +
             '}';
@@ -85,13 +94,5 @@ public class Video {
     this.remarkNum = remarkNum;
   }
 
-
-  public String getDescribe() {
-    return describe;
-  }
-
-  public void setDescribe(String describe) {
-    this.describe = describe;
-  }
 
 }

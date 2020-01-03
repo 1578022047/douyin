@@ -106,7 +106,7 @@ public class VideoPublishActivity extends AppCompatActivity {
                 String url=HttpUtil.host+"uploadVideo";
                 ((App)getApplication()).setUser(new User("1","2","3","4","5","6",7));
                 User user=((App)getApplication()).getUser();
-                Video video=new Video(null,user.getUserId(),0,0,describe_edit.getText().toString(),null);
+                Video video=new Video(null,user.getUserId(),0,0,describe_edit.getText().toString(),null,null);
                 HttpUtil.uploadVideoHttp(url,videoPath,user.getName(),saveImageToGallery(bitmap, "my"),"my.jpg",new Gson().toJson(video), new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {

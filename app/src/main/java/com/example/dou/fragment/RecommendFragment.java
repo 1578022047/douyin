@@ -1,6 +1,7 @@
 package com.example.dou.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class RecommendFragment extends AddMethodFragment {
         urls = new ArrayList<>();
     }
     private void getVideo(){
-        String url="";
+        String url=HttpUtil.host+"getFiveVideo";
         HttpUtil.getFiveVideoHttp(url, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -69,11 +70,21 @@ public class RecommendFragment extends AddMethodFragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                videos=new Gson().fromJson(response.body().string(),new TypeToken<List<Video>>(){}.getType());
-                for(int i=0;i<5;i++) {
-                    urls.add(videos.get(i).getVideoUrl());
-                    adapter.notifyDataSetChanged();
-                }
+
+                    new Handler(getActivity().getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                videos=new Gson().fromJson(response.body().string(),new TypeToken<List<Video>>(){}.getType());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            for(int i=0;i<5;i++) {
+                                urls.add(videos.get(i).getVideoUrl());
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
             }
         });
     }
@@ -115,8 +126,7 @@ public class RecommendFragment extends AddMethodFragment {
     @Override
     public void onPause() {
         super.onPause();
-        StandardGSYVideoPlayer videoPlayer=videoList.getChildAt(curPosition).findViewById(R.id.video);
-        videoPlayer.onVideoPause();
+
     }
 
     @Override
