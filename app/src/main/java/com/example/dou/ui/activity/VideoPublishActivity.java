@@ -39,6 +39,7 @@ import com.example.dou.utils.HttpUtil;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -106,7 +107,7 @@ public class VideoPublishActivity extends AppCompatActivity {
                 ((App)getApplication()).setUser(new User("1","2","3","4","5","6",7));
                 User user=((App)getApplication()).getUser();
                 Video video=new Video(null,user.getUserId(),0,0,describe_edit.getText().toString(),null);
-                HttpUtil.uploadVideoHttp(url,videoPath,user.getName(),bitmap2File(bitmap, "my"),"my.jpg",new Gson().toJson(video), new Callback() {
+                HttpUtil.uploadVideoHttp(url,videoPath,user.getName(),saveImageToGallery(bitmap, "my"),"my.jpg",new Gson().toJson(video), new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         System.out.println("xxxxxxxxxxxxshibai");
@@ -135,32 +136,30 @@ public class VideoPublishActivity extends AppCompatActivity {
 
     //将图片保存
 
-    public  static String bitmap2File(Bitmap bitmap, String name) {
-
-        File f = new File(Environment.getExternalStorageDirectory() + name + ".jpg");
-
-        if (f.exists()) f.delete();
-
-        FileOutputStream fOut = null;
-
-        try {
-
-            fOut = new FileOutputStream(f);
-
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-
-            fOut.flush();
-
-            fOut.close();
-
-        } catch (IOException e) {
-
-            return null;
-
+    public static String saveImageToGallery(Bitmap bmp,String bitName ) {
+        // 首先保存图片
+        File appDir = new File(Environment.getExternalStorageDirectory(),
+                "yingtan");
+        if (!appDir.exists()) {
+            appDir.mkdir();
         }
 
-        return f.getAbsolutePath();
+        String fileName = bitName + ".jpg";
+        File file = new File(appDir, fileName);
+
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file.getAbsolutePath();
     }
+
 
     //更换封面
     private void displayImage(final String imagePath) {       //显示图片
