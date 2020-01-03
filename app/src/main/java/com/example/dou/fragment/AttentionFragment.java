@@ -15,16 +15,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dou.R;
 import com.example.dou.RecyclerViewPageChangeListenerHelper;
 import com.example.dou.VideoAdapter;
+import com.example.dou.pojo.Video;
+import com.example.dou.utils.HttpUtil;
 import com.example.dou.viewpage.AddMethodFragment;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class AttentionFragment extends AddMethodFragment {
     RecyclerView videoList;
     List<String> urls;
+    List<Video> videos;
     LinearLayoutManager layoutManager;
+    VideoAdapter adapter;
     private String title;
     int curPosition=0;
 
@@ -41,28 +51,42 @@ public class AttentionFragment extends AddMethodFragment {
         return view;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
     private void initDate() {
         urls = new ArrayList<>();
-        urls.add("http://www.liuyishou.site/video/1.mp4");
-        urls.add("http://www.liuyishou.site/video/2.mp4");
-        urls.add("http://www.liuyishou.site/video/3.mp4");
-        urls.add("http://www.liuyishou.site/video/4.mp4");
-        urls.add("http://www.liuyishou.site/video/5.mp4");
     }
+    private void getVideo(){
+        String url="";
+        HttpUtil.getFiveVideoHttp(url, new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
 
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                videos=new Gson().fromJson(response.body().string(),new TypeToken<List<Video>>(){}.getType());
+                for(int i=0;i<5;i++) {
+                    urls.add(videos.get(i).getVideoUrl());
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
     private void initView() {
         final PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(videoList);
         layoutManager=new LinearLayoutManager(getContext());
         videoList.setLayoutManager(layoutManager);
-        final VideoAdapter adapter=new VideoAdapter(urls,getContext());
+        adapter=new VideoAdapter(urls,getContext());
         videoList.setAdapter(adapter);
         videoList.getItemAnimator().setChangeDuration(0);
         videoList.setItemAnimator(null);
+        getVideo();
         videoList.addOnScrollListener(new RecyclerViewPageChangeListenerHelper(pagerSnapHelper,
                 new RecyclerViewPageChangeListenerHelper.OnPageChangeListener() {
 
@@ -81,10 +105,9 @@ public class AttentionFragment extends AddMethodFragment {
                     public void onPageSelected(int position) {
                         adapter.setPlay(position);
                         if(urls.size()-position<=3){
-                            urls.add("http://www.liuyishou.site/video/"+String.valueOf(position+3)+".mp4");
-                            adapter.notifyDataSetChanged();
-                            curPosition=position;
+                            getVideo();
                         }
+                        curPosition=position;
                     }
                 }));
     }
