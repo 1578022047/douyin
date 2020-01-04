@@ -29,6 +29,7 @@ public class VerifyLoginActivity extends AppCompatActivity implements View.OnCli
     private Button login_button;
     private TextView login_with_password_textView;
     private Intent intent;
+    private TextView register_textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class VerifyLoginActivity extends AppCompatActivity implements View.OnCli
         phone_num_editView = findViewById(R.id.phone_num);
         login_button = findViewById(R.id.login_button);
         login_with_password_textView = findViewById(R.id.login_with_password);
+        register_textView = findViewById(R.id.register);
 
         initListener();
 
@@ -52,6 +54,7 @@ public class VerifyLoginActivity extends AppCompatActivity implements View.OnCli
         phone_num_editView.setOnClickListener(this);
         login_button.setOnClickListener(this);
         login_with_password_textView.setOnClickListener(this);
+        register_textView.setOnClickListener(this);
     }
 
     @Override
@@ -67,6 +70,10 @@ public class VerifyLoginActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.login_with_password:
                 intent = new Intent(this,LoginActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.register:
+                intent = new Intent(this,RegisterActivity.class);
                 startActivity(intent);
                 break;
             default:

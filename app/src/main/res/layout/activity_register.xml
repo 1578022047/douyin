@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activity.VerifyLoginActivity">
-
+    tools:context=".ui.activity.LoginActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="155px"
@@ -32,7 +31,6 @@
             android:id="@+id/help"
             />
     </RelativeLayout>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -44,50 +42,15 @@
             android:orientation="vertical"
             android:layout_margin="40dp"
             >
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="20dp"
-                android:text="登录后即可展示自己"
                 android:textColor="@color/colorBlack"
+                android:textStyle="bold"
                 android:textSize="25dp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="登陆即表明同意"
-                    android:textColor="#939393" />
-
-                <TextView
-                    android:id="@+id/user_agreement"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" 用户协议"
-                    android:textColor="#04498d" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" 和 "
-                    android:textColor="#939393" />
-
-                <TextView
-                    android:id="@+id/private_public"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="隐私政策"
-                    android:textColor="#04498d" />
-            </LinearLayout>
-
+                android:text="手机号注册账号"
+                android:layout_marginLeft="6dp"
+                android:layout_marginBottom="20dp"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,41 +61,61 @@
                 android:layout_marginBottom="10dp"
                 android:id="@+id/phone_num"
                 />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="未注册的手机号验证"
-                android:textColor="#939393" />
-            <Button
-                android:id="@+id/login_button"
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="获取短信验证码" />
-
-            <RelativeLayout
+                android:hint="请输入密码"
+                android:padding="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="#f9f9f9"
+                android:id="@+id/password"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入重复密码"
+                android:padding="15dp"
+                android:background="#f9f9f9"
+                android:id="@+id/repassword"
+                />
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp">
                 <TextView
-                    android:layout_alignParentLeft="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#04498d"
-                    android:text="密码登陆"
-                    android:id="@+id/login_with_password"
+                    android:textColor="#939393"
+                    android:text="登陆即表明同意"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:textColor="#04498d"
-                    android:text="注册账号"
-                    android:id="@+id/register"
+                    android:text=" 用户协议"
+                    android:id="@+id/user_agreement"
                     />
-            </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#939393"
+                    android:text=" 和 "
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#04498d"
+                    android:text="隐私政策"
+                    android:id="@+id/private_public"
+                    />
+            </LinearLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="注册"
+                android:id="@+id/register_button"
+                />
         </LinearLayout>
     </FrameLayout>
 

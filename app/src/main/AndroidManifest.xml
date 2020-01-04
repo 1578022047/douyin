@@ -16,8 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.VideoPublishActivity"
-            android:label="发布"></activity>
+        <activity android:name=".ui.activity.RegisterActivity"></activity>
+        <activity
+            android:name=".ui.activity.VideoPublishActivity"
+            android:label="发布" />
         <activity android:name=".ui.activity.VerifyLogin2Activity" />
         <activity android:name=".ui.activity.VerifyLoginActivity" />
         <activity android:name=".ui.activity.LoginActivity" />

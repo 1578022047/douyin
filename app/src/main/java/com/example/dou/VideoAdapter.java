@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.dou.view.FullStandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import java.util.List;
@@ -18,7 +21,8 @@ import java.util.List;
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
 
     private int play = 0;
-    private List<String> urls;
+    private List<String> videoUrls;
+    private List<String> imageUrls;
     Context context;
     public void setPlay(int play) {
         this.play = play;
@@ -35,8 +39,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         }
     }
 
-    public VideoAdapter(List<String> urls,Context context) {
-        this.urls = urls;
+    public VideoAdapter(List<String> videoUrls,List<String> imageUrls,Context context) {
+        this.videoUrls=videoUrls;
+        this.imageUrls = imageUrls;
         this.context=context;
     }
 
@@ -59,7 +64,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             viewHolder.video.getFullscreenButton().setVisibility(View.GONE);
             viewHolder.video.setDismissControlTime(0);
             viewHolder.video.setNeedShowWifiTip(true);
-            viewHolder.video.setUp(urls.get(i),true,urls.get(i));
+            viewHolder.video.setUp(videoUrls.get(i),true,videoUrls.get(i));
             viewHolder.video.startPlayLogic();
             viewHolder.video.setReleaseWhenLossAudio(true);
             viewHolder.image.setVisibility(View.GONE);
@@ -68,12 +73,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             viewHolder.video.setVisibility(View.GONE);
             viewHolder.video.release();
         }
-
     }
 
     @Override
     public int getItemCount() {
-        return urls.size();
+        return videoUrls.size();
     }
 
 

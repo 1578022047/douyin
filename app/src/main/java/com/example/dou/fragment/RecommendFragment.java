@@ -32,33 +32,35 @@ import okhttp3.Response;
 
 public class RecommendFragment extends AddMethodFragment {
     RecyclerView videoList;
-    List<String> urls;
+    List<String> videoUrls;
+    List<String> imageUrls;
     List<Video> videos;
     LinearLayoutManager layoutManager;
     VideoAdapter adapter;
+    private String title;
     int curPosition=0;
 
     public String getTitle() {
         return "推荐";
     }
-
-    private String title;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.recomment_fragment,null);
+        View view = inflater.inflate(R.layout.attention_fragment,null);
         videoList=view.findViewById(R.id.videoList);
         initDate();
         initView();
         return view;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
     private void initDate() {
-        urls = new ArrayList<>();
+        videoUrls = new ArrayList<>();
+        imageUrls=new ArrayList<>();
     }
     private void getVideo(){
         String url=HttpUtil.host+"getFiveVideo";
@@ -70,21 +72,21 @@ public class RecommendFragment extends AddMethodFragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
-                    new Handler(getActivity().getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                videos=new Gson().fromJson(response.body().string(),new TypeToken<List<Video>>(){}.getType());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            for(int i=0;i<5;i++) {
-                                urls.add(videos.get(i).getVideoUrl());
-                            }
-                            adapter.notifyDataSetChanged();
+                new Handler(getActivity().getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            videos=new Gson().fromJson(response.body().string(),new TypeToken<List<Video>>(){}.getType());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    });
+                        for(int i=0;i<5;i++) {
+                            imageUrls.add(videos.get(i).getImageUrl());
+                            videoUrls.add(videos.get(i).getVideoUrl());
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
     }
@@ -93,7 +95,7 @@ public class RecommendFragment extends AddMethodFragment {
         pagerSnapHelper.attachToRecyclerView(videoList);
         layoutManager=new LinearLayoutManager(getContext());
         videoList.setLayoutManager(layoutManager);
-        adapter=new VideoAdapter(urls,getContext());
+        adapter=new VideoAdapter(videoUrls,imageUrls,getContext());
         videoList.setAdapter(adapter);
         videoList.getItemAnimator().setChangeDuration(0);
         videoList.setItemAnimator(null);
@@ -115,7 +117,7 @@ public class RecommendFragment extends AddMethodFragment {
                     @Override
                     public void onPageSelected(int position) {
                         adapter.setPlay(position);
-                        if(urls.size()-position<=3){
+                        if(videoUrls.size()-position<=3){
                             getVideo();
                         }
                         curPosition=position;
@@ -139,3 +141,4 @@ public class RecommendFragment extends AddMethodFragment {
         super.onDestroy();
     }
 }
+

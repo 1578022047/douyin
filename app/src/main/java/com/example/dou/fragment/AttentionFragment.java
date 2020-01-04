@@ -1,11 +1,13 @@
 package com.example.dou.fragment;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.dou.R;
 import com.example.dou.RecyclerViewPageChangeListenerHelper;
 import com.example.dou.VideoAdapter;
@@ -34,7 +38,8 @@ import okhttp3.Response;
 
 public class AttentionFragment extends AddMethodFragment {
     RecyclerView videoList;
-    List<String> urls;
+    List<String> videoUrls;
+    List<String> imageUrls;
     List<Video> videos;
     LinearLayoutManager layoutManager;
     VideoAdapter adapter;
@@ -60,7 +65,8 @@ public class AttentionFragment extends AddMethodFragment {
         super.onCreate(savedInstanceState);
     }
     private void initDate() {
-        urls = new ArrayList<>();
+        videoUrls = new ArrayList<>();
+        imageUrls=new ArrayList<>();
     }
     private void getVideo(){
         String url=HttpUtil.host+"getFiveVideo";
@@ -81,7 +87,8 @@ public class AttentionFragment extends AddMethodFragment {
                             e.printStackTrace();
                         }
                         for(int i=0;i<5;i++) {
-                            urls.add(videos.get(i).getVideoUrl());
+                            imageUrls.add(videos.get(i).getImageUrl());
+                            videoUrls.add(videos.get(i).getVideoUrl());
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -94,7 +101,7 @@ public class AttentionFragment extends AddMethodFragment {
         pagerSnapHelper.attachToRecyclerView(videoList);
         layoutManager=new LinearLayoutManager(getContext());
         videoList.setLayoutManager(layoutManager);
-        adapter=new VideoAdapter(urls,getContext());
+        adapter=new VideoAdapter(videoUrls,imageUrls,getContext());
         videoList.setAdapter(adapter);
         videoList.getItemAnimator().setChangeDuration(0);
         videoList.setItemAnimator(null);
@@ -116,7 +123,7 @@ public class AttentionFragment extends AddMethodFragment {
                     @Override
                     public void onPageSelected(int position) {
                         adapter.setPlay(position);
-                        if(urls.size()-position<=3){
+                        if(videoUrls.size()-position<=3){
                             getVideo();
                         }
                         curPosition=position;
