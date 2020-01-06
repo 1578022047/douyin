@@ -41,7 +41,7 @@
 
     -<style parent="Widget.AppCompat.ActionButton.Overflow" name="OverFlowIcon">
 
-    <item name="android:src">@drawable/abc_ic_menu_moreoverflow_mtrl_alpha</item>
+    <item name="android:src">@drawable/menu1</item>
 
 </style>
 
