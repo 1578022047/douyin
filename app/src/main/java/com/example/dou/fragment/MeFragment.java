@@ -137,7 +137,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initData() {
-        if(((App)getActivity().getApplication()).getUser()!=null) {
+        user=((App)getActivity().getApplication()).getUser();
+        if(user!=null) {
             String url= HttpUtil.host+"getUserVideoAndInfo";
             String userId = ((App) getActivity().getApplication()).getUser().getUserId();
             HttpUtil.getUserVideoAndInfoHttp(url, userId, new okhttp3.Callback() {
@@ -152,20 +153,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void run() {
                             try {
-                                Map<String,String> map=new Gson().fromJson(response.body().string(), Map.class);
-                                user=new Gson().fromJson(map.get("user"),User.class);
-                                userVideos=new Gson().fromJson(map.get("userVideoList"),new TypeToken<List<Video>>(){}.getType());
-                                likeVideos=new Gson().fromJson(map.get("likeVideoList"),new TypeToken<List<Video>>(){}.getType());
-                                new Handler(getActivity().getMainLooper()).post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("作品","neirong1",userVideos));
-                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("动态","neirong2",userVideos));
-                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("喜欢","neirong3",likeVideos));
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                });
-
+                                Map<String, String> map = new Gson().fromJson(response.body().string(), Map.class);
+                                userVideos = new Gson().fromJson(map.get("userVideoList"), new TypeToken<List<Video>>() {
+                                }.getType());
+                                likeVideos = new Gson().fromJson(map.get("likeVideoList"), new TypeToken<List<Video>>() {
+                                }.getType());
+                                viewPagerVideoFragments.add(new ViewPagerVideoFragment("作品", "neirong1", userVideos,user));
+                                viewPagerVideoFragments.add(new ViewPagerVideoFragment("动态", "neirong2", userVideos,user));
+                                viewPagerVideoFragments.add(new ViewPagerVideoFragment("喜欢", "neirong3", likeVideos,user));
+                                adapter.notifyDataSetChanged();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

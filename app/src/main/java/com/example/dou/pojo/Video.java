@@ -1,7 +1,9 @@
 package com.example.dou.pojo;
 
 
-public class Video {
+import java.io.Serializable;
+
+public class Video implements Serializable {
 
   private Integer videoId;
   private String userId;

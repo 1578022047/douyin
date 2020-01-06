@@ -15,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dou.App;
 import com.example.dou.R;
+import com.example.dou.adapter.UserVideoAdapter;
 import com.example.dou.adapter.ZuopingAdapter;
+import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
 import com.example.dou.utils.HttpUtil;
 
@@ -30,6 +32,7 @@ public class ViewPagerVideoFragment extends Fragment {
 
     private String title;
     private String content;
+    private User user;
     private View view;
     private List<Video> videos = new ArrayList<>();
     RecyclerView zuoping;
@@ -37,10 +40,11 @@ public class ViewPagerVideoFragment extends Fragment {
     private final static String TAG = "ViewPagerVideoFragment";
 
 
-    public ViewPagerVideoFragment(final String title, final String content,List<Video> videos) {
+    public ViewPagerVideoFragment(final String title, final String content, List<Video> videos, User user) {
         this.title = title;
         this.content = content;
         this.videos= videos;
+        this.user=user;
     }
 
     @Override
@@ -63,10 +67,10 @@ public class ViewPagerVideoFragment extends Fragment {
     }
 
     private void initData() {
-        ZuopingAdapter zuopingAdapter = new ZuopingAdapter(videos);
+        UserVideoAdapter adapter = new UserVideoAdapter(videos,user,getContext());
         GridLayoutManager grid = new GridLayoutManager(getActivity(), 3);
         zuoping.setLayoutManager(grid);
-        zuoping.setAdapter(zuopingAdapter);
+        zuoping.setAdapter(adapter);
     }
 
     public String getTitle() {
