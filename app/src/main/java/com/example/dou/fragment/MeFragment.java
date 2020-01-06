@@ -28,6 +28,7 @@ import com.example.dou.App;
 import com.example.dou.adapter.ZuopingAdapter;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
+import com.example.dou.ui.activity.ChangeUserBriefActivity;
 import com.example.dou.ui.activity.MainActivity;
 import com.example.dou.adapter.ViewPagerAdapter;
 import com.example.dou.R;
@@ -47,6 +48,8 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 public class MeFragment extends Fragment implements View.OnClickListener {
 
@@ -111,8 +114,21 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onClick(final View v) {
         switch (v.getId()){
             case R.id.user_info:
-                Intent intent = new Intent();
-                startActivity(intent);
+                Intent intent = new Intent(getContext(), ChangeUserBriefActivity.class);
+                startActivityForResult(intent,1);
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent data) {
+        switch (requestCode){
+            case 1:
+                if (resultCode==RESULT_OK){
+                    String brief = data.getStringExtra("brief");
+//                    通过执行返回的这个方法，更新brief信息
+                    user_info.setText(brief);
+                }
                 break;
         }
     }
@@ -122,22 +138,25 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initInfo() {
-        Glide.with(App.sApplication)
-                .load(user.getImageUrl())
-                .into(me_image);
 //        设置meimage的src
-        douyinId.setText(user.getUserId());
+        if(user!=null) {
+            Glide.with(App.sApplication)
+                    .load(user.getImageUrl())
+                    .into(image_toolbar);
+            Glide.with(App.sApplication)
+                    .load(user.getImageUrl())
+                    .into(me_image);
+            douyinId.setText(user.getUserId());
 
-        user_info.setText(user.getBrief());
+            user_info.setText(user.getBrief());
 
-        Glide.with(App.sApplication)
-                .load(user.getImageUrl())
-                .into(image_toolbar);
+        }
 
     }
 
     private void initData() {
-        if(((App)getActivity().getApplication()).getUser()!=null) {
+        user=((App)getActivity().getApplication()).getUser();
+        if(user!=null) {
             String url= HttpUtil.host+"getUserVideoAndInfo";
             String userId = ((App) getActivity().getApplication()).getUser().getUserId();
             HttpUtil.getUserVideoAndInfoHttp(url, userId, new okhttp3.Callback() {
@@ -153,9 +172,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         public void run() {
                             try {
                                 Map<String,String> map=new Gson().fromJson(response.body().string(), Map.class);
-                                user=new Gson().fromJson(map.get("user"),User.class);
                                 userVideos=new Gson().fromJson(map.get("userVideoList"),new TypeToken<List<Video>>(){}.getType());
                                 likeVideos=new Gson().fromJson(map.get("likeVideoList"),new TypeToken<List<Video>>(){}.getType());
+
                                 new Handler(getActivity().getMainLooper()).post(new Runnable() {
                                     @Override
                                     public void run() {
