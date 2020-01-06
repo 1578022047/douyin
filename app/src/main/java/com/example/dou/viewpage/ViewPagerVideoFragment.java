@@ -11,19 +11,27 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.adapter.ZuopingAdapter;
+import com.example.dou.pojo.Video;
 import com.example.dou.recycler_pojo.ZuopingPojo;
+import com.example.dou.utils.HttpUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class ViewPagerVideoFragment extends Fragment {
 
     private String title;
     private String content;
     private View view;
-    private List<ZuopingPojo> zuopingPojoList = new ArrayList<>();
+    private List<Video> videos = new ArrayList<>();
+    RecyclerView zuoping;
 
     private final static String TAG = "ViewPagerVideoFragment";
 
@@ -36,7 +44,6 @@ public class ViewPagerVideoFragment extends Fragment {
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -50,19 +57,27 @@ public class ViewPagerVideoFragment extends Fragment {
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RecyclerView zuoping= view.findViewById(R.id.zuoping_recycler);
+        zuoping= view.findViewById(R.id.zuoping_recycler);
         initData();
-
-        ZuopingAdapter zuopingAdapter = new ZuopingAdapter(zuopingPojoList);
-        GridLayoutManager grid = new GridLayoutManager(getActivity(),3);
-        zuoping.setLayoutManager(grid);
-        zuoping.setAdapter(zuopingAdapter);
     }
 
     private void initData() {
-        for (int i=1;i<=20;i++){
-            zuopingPojoList.add(new ZuopingPojo(R.drawable.fruit,i+"w"));
-        }
+        String url="";
+        String userId=((App)getActivity().getApplication()).getUser().getUserId();
+        HttpUtil.getUserVideoAndInfoHttp(url,userId, new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                ZuopingAdapter zuopingAdapter = new ZuopingAdapter(videos);
+                GridLayoutManager grid = new GridLayoutManager(getActivity(),3);
+                zuoping.setLayoutManager(grid);
+                zuoping.setAdapter(zuopingAdapter);
+            }
+        });
     }
 
     public String getTitle() {

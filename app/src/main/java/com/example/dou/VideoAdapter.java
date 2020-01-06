@@ -11,9 +11,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.example.dou.view.FullStandardGSYVideoPlayer;
+
+import com.example.dou.pojo.Video;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import java.util.List;
@@ -21,8 +20,7 @@ import java.util.List;
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
 
     private int play = 0;
-    private List<String> videoUrls;
-    private List<String> imageUrls;
+    private List<Video> videos;
     Context context;
     public void setPlay(int play) {
         this.play = play;
@@ -31,17 +29,16 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         StandardGSYVideoPlayer video;
-        ImageView image;
+        ImageView heart;
         public ViewHolder(View view){
             super(view);
             video=view.findViewById(R.id.video);
-            image=view.findViewById(R.id.image);
+            heart=view.findViewById(R.id.heart);
         }
     }
 
-    public VideoAdapter(List<String> videoUrls,List<String> imageUrls,Context context) {
-        this.videoUrls=videoUrls;
-        this.imageUrls = imageUrls;
+    public VideoAdapter(List<Video> videos,Context context) {
+        this.videos=videos;
         this.context=context;
     }
 
@@ -55,6 +52,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        viewHolder.heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewHolder.heart.setImageResource(R.drawable.redheart);
+            }
+        });
         if (play == i) {
             viewHolder.video.setVisibility(View.VISIBLE);
             viewHolder.video.setLooping(true);
@@ -64,12 +67,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             viewHolder.video.getFullscreenButton().setVisibility(View.GONE);
             viewHolder.video.setDismissControlTime(0);
             viewHolder.video.setNeedShowWifiTip(true);
-            viewHolder.video.setUp(videoUrls.get(i),true,videoUrls.get(i));
+            viewHolder.video.setUp(videos.get(i).getVideoUrl(),true,videos.get(i).getVideoUrl());
             viewHolder.video.startPlayLogic();
             viewHolder.video.setReleaseWhenLossAudio(true);
-            viewHolder.image.setVisibility(View.GONE);
         } else {
-            viewHolder.image.setVisibility(View.VISIBLE);
             viewHolder.video.setVisibility(View.GONE);
             viewHolder.video.release();
         }
@@ -77,7 +78,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return videoUrls.size();
+        return videos.size();
     }
 
 

@@ -79,7 +79,6 @@ public class MeFragment extends Fragment {
         ActionBar actionBar = mainActivity.getSupportActionBar();
         toolbarLayout.setTitle("我");
 
-        System.out.println("XXXXXXXXXXXXXXXX:"+viewPagerVideoFragments.size());
     }
 
     @Override

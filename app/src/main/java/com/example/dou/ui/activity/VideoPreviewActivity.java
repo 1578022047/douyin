@@ -2,10 +2,13 @@ package com.example.dou.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.media.ThumbnailUtils;
 import android.os.Build;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,11 @@ import com.bumptech.glide.Glide;
 import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.base.BaseActivity;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 /**
@@ -55,7 +63,45 @@ public class VideoPreviewActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mVideoPath = getIntent().getStringExtra("path");
-        mVideoThumb = getIntent().getStringExtra("thumb");
+        mVideoThumb = saveImageToGallery(getVideoThumbnail(mVideoPath,150,150,1),"videoImage");
+    }
+
+    //获取第一帧缩略图
+    public static Bitmap getVideoThumbnail(String videoPath, int width, int height, int kind) {
+        Bitmap bitmap = null;
+        // 获取视频的缩略图
+        bitmap = ThumbnailUtils.createVideoThumbnail(videoPath, kind); //調用ThumbnailUtils類的靜態方法createVideoThumbnail獲取視頻的截圖；
+        if (bitmap != null) {
+            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
+                    ThumbnailUtils.OPTIONS_RECYCLE_INPUT);//調用ThumbnailUtils類的靜態方法extractThumbnail將原圖片（即上方截取的圖片）轉化為指定大小；
+        }
+        return bitmap;
+    }
+
+    //将图片保存
+
+    public static String saveImageToGallery(Bitmap bmp,String bitName ) {
+        // 首先保存图片
+        File appDir = new File(Environment.getExternalStorageDirectory(),
+                "VideoImage");
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+
+        String fileName = bitName + ".jpg";
+        File file = new File(appDir, fileName);
+
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file.getAbsolutePath();
     }
 
     @Override

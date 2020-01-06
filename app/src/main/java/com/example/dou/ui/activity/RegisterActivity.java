@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.pojo.User;
 import com.example.dou.utils.HttpUtil;
@@ -92,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     User user = new User();
                     user = new Gson().fromJson(result,User.class);
 //                    返回的用户对象！！！
-                    System.out.println("*********"+user);
+                    ((App)getApplication()).setUser(user);
 
                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                     startActivity(intent);

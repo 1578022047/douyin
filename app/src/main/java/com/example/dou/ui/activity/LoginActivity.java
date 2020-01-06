@@ -19,7 +19,6 @@ import com.google.gson.Gson;
 
 
 import java.io.IOException;
-import java.util.UUID;
 
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -86,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     User user = new User();
                     user = new Gson().fromJson(result,User.class);
 //                    返回的用户对象！！！
-
+                    ((App)getApplication()).setUser(user);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }else {

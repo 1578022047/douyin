@@ -128,7 +128,6 @@ public class RecommendFragment extends AddMethodFragment {
     @Override
     public void onPause() {
         super.onPause();
-
     }
 
     @Override

@@ -21,7 +21,7 @@ public class HttpUtil {
         client.newCall(request).enqueue(callback);
 
     }
-//可以以map的形式传入多个参数
+    //可以以map的形式传入多个参数
     public static void sendPostHttpRequest(String address, Map<String,String> mapData, okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder requestBody = new FormBody.Builder();
@@ -65,8 +65,8 @@ public class HttpUtil {
         client.newCall(request).enqueue(callback);
     }
 
-    //获取用户视频
-    public static void getUserVideoHttp(String address,String userId,okhttp3.Callback callback){
+    //获取用户视频以及信息
+    public static void getUserVideoAndInfoHttp(String address,String userId,okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder requestBody = new FormBody.Builder();
         requestBody.add("userId",userId);
@@ -76,5 +76,76 @@ public class HttpUtil {
         client.newCall(request).enqueue(callback);
     }
 
+    //点赞
+    public static void likeVideoHttp(String address,String userId,String videoId,okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("userId",userId)
+                .add("videoId",videoId);
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //关注
+    public static void attentionVideoHttp(String address,String userId,String targetId,okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("userId",userId);
+        requestBody.add("targetId",targetId);
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //判断是否已关注
+    public static void isAttentionVideoHttp(String address,String userId,String targetId,okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("userId",userId);
+        requestBody.add("targetId",targetId);
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+
+
+    //转发
+    public static void forwardHttp(String address,String videoId,okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("videoId",videoId);
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //判断是否已点赞
+    public static void isLikeVideoHttp(String address,String userId,String videoId,okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("userId",userId);
+        requestBody.add("videoId",videoId);
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //获取喜欢的视频
+    public static void getLikeVideoHttp(String address,String userId,okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("userId",userId);
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
 
 }

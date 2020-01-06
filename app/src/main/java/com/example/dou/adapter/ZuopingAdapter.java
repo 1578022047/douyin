@@ -1,6 +1,5 @@
 package com.example.dou.adapter;
 
-import android.service.quicksettings.TileService;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,19 +7,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MethodCallsLogger;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.dou.App;
 import com.example.dou.R;
-import com.example.dou.recycler_pojo.ZuopingPojo;
+import com.example.dou.pojo.Video;
 
 import java.util.List;
 
 public class ZuopingAdapter extends RecyclerView.Adapter<ZuopingAdapter.ViewHolder> {
 
-    private List<ZuopingPojo> list;
-    public ZuopingAdapter(List<ZuopingPojo> list){
-        this.list = list;
+    private List<Video> videos;
+    public ZuopingAdapter(List<Video> videos){
+        this.videos = videos;
     }
 
     @NonNull
@@ -33,14 +33,15 @@ public class ZuopingAdapter extends RecyclerView.Adapter<ZuopingAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        ZuopingPojo zuopingPojo = list.get(position);
-        holder.imageView.setImageResource(zuopingPojo.getImage());
-        holder.textView.setText(zuopingPojo.getNum());
+        Glide.with(App.sApplication)
+                .load(videos.get(position).getImageUrl())
+                .into(holder.imageView);
+        holder.textView.setText(videos.get(position).getLikeNum());
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return videos.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

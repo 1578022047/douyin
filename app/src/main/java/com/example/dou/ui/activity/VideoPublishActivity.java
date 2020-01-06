@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.pojo.User;
@@ -52,6 +53,7 @@ public class VideoPublishActivity extends AppCompatActivity {
     ImageView videoImage;
     public static final int CHOOSE_PHOTO = 2;
     String videoPath;
+    private String videoThumb;
     Toolbar toolbar;
     EditText describe_edit;
     Button publish;
@@ -80,8 +82,10 @@ public class VideoPublishActivity extends AppCompatActivity {
 
     private void init() {
         videoPath=getIntent().getStringExtra("path");
-        bitmap=getVideoThumbnail(videoPath,150,150,1);
-        videoImage.setImageBitmap(bitmap);
+        videoThumb=getIntent().getStringExtra("thumb");
+        Glide.with(App.sApplication)
+                .load(videoThumb)
+                .into(videoImage);
     }
 
     private void initView() {
@@ -104,34 +108,21 @@ public class VideoPublishActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String url=HttpUtil.host+"uploadVideo";
-                ((App)getApplication()).setUser(new User("1","2","3","4","5","6",7));
                 User user=((App)getApplication()).getUser();
                 Video video=new Video(null,user.getUserId(),0,0,describe_edit.getText().toString(),null,null);
-                HttpUtil.uploadVideoHttp(url,videoPath,user.getName(),saveImageToGallery(bitmap, "my"),"my.jpg",new Gson().toJson(video), new Callback() {
+                HttpUtil.uploadVideoHttp(url,videoPath,user.getName(),videoThumb,"videoImage.jpg",new Gson().toJson(video), new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        System.out.println("xxxxxxxxxxxxshibai");
+
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        System.out.println("xxxxxxxxxxxxxxxxchenggong");
+
                     }
                 });
             }
         });
-    }
-
-    //获取第一帧缩略图
-    public static Bitmap getVideoThumbnail(String videoPath, int width, int height, int kind) {
-        Bitmap bitmap = null;
-        // 获取视频的缩略图
-        bitmap = ThumbnailUtils.createVideoThumbnail(videoPath, kind); //調用ThumbnailUtils類的靜態方法createVideoThumbnail獲取視頻的截圖；
-        if (bitmap != null) {
-            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
-                    ThumbnailUtils.OPTIONS_RECYCLE_INPUT);//調用ThumbnailUtils類的靜態方法extractThumbnail將原圖片（即上方截取的圖片）轉化為指定大小；
-        }
-        return bitmap;
     }
 
     //将图片保存
@@ -139,7 +130,7 @@ public class VideoPublishActivity extends AppCompatActivity {
     public static String saveImageToGallery(Bitmap bmp,String bitName ) {
         // 首先保存图片
         File appDir = new File(Environment.getExternalStorageDirectory(),
-                "yingtan");
+                "VideoImage");
         if (!appDir.exists()) {
             appDir.mkdir();
         }
@@ -172,6 +163,7 @@ public class VideoPublishActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     bitmap = BitmapFactory.decodeFile(imagePath);
                     videoImage.setImageBitmap(bitmap);
+                    videoThumb=saveImageToGallery(bitmap,"videoImage");
                 }
             });
             dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {

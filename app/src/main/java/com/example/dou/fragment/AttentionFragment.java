@@ -134,13 +134,15 @@ public class AttentionFragment extends AddMethodFragment {
     @Override
     public void onPause() {
         super.onPause();
-
+        adapter.setPlay(-1);
     }
 
     @Override
     public void onResume() {
         super.onResume();
     }
+
+
 
     @Override
     public void onDestroy() {
