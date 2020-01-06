@@ -1,5 +1,7 @@
 package com.example.dou.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -8,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +37,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +48,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Response;
 
-public class MeFragment extends Fragment {
+public class MeFragment extends Fragment implements View.OnClickListener {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private CollapsingToolbarLayout toolbarLayout;
-    //viewpager使用！！！
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private List<ViewPagerVideoFragment> viewPagerVideoFragments = new ArrayList<>();
@@ -55,8 +60,15 @@ public class MeFragment extends Fragment {
     private List<Video> userVideos;
     private List<Video> likeVideos;
     ViewPagerAdapter adapter;
-    CircleImageView me_image;
 
+//    给mefragmnet设置个人信息
+    private CircleImageView me_image;
+    private TextView douyinId;
+    private TextView user_info;
+    private ImageView image_toolbar;
+    private TextView huozan_num;
+    private TextView guanzhu_num;
+    private TextView fans_num;
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,15 +84,56 @@ public class MeFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.view_pager);
         me_image=view.findViewById(R.id.me_image);
+        douyinId = view.findViewById(R.id.douyin_id);
+        user_info = view.findViewById(R.id.user_info);
+        image_toolbar = view.findViewById(R.id.image_toolbar);
+        huozan_num = view.findViewById(R.id.huozan_num);
+        guanzhu_num = view.findViewById(R.id.guanzhu_num);
+        fans_num = view.findViewById(R.id.fans_num);
+
         //        设置viewpager适配器，以及添加适配器数据
         adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(),viewPagerVideoFragments);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
         viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
+
+//        通过请求服务器获得个人信息等
         initData();
-//        这个属性在xml中设置是一样的
+//        初始化mefragment信息
+        initInfo();
+//        添加监听事件
+        initListener();
         return view;
+    }
+
+    @Override
+    public void onClick(final View v) {
+        switch (v.getId()){
+            case R.id.user_info:
+                Intent intent = new Intent();
+                startActivity(intent);
+                break;
+        }
+    }
+
+    private void initListener() {
+        user_info.setOnClickListener(this);
+    }
+
+    private void initInfo() {
+        Glide.with(App.sApplication)
+                .load(user.getImageUrl())
+                .into(me_image);
+//        设置meimage的src
+        douyinId.setText(user.getUserId());
+
+        user_info.setText(user.getBrief());
+
+        Glide.with(App.sApplication)
+                .load(user.getImageUrl())
+                .into(image_toolbar);
+
     }
 
     private void initData() {
@@ -106,9 +159,6 @@ public class MeFragment extends Fragment {
                                 new Handler(getActivity().getMainLooper()).post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Glide.with(App.sApplication)
-                                                .load(user.getImageUrl())
-                                                .into(me_image);
                                         viewPagerVideoFragments.add(new ViewPagerVideoFragment("作品","neirong1",userVideos));
                                         viewPagerVideoFragments.add(new ViewPagerVideoFragment("动态","neirong2",userVideos));
                                         viewPagerVideoFragments.add(new ViewPagerVideoFragment("喜欢","neirong3",likeVideos));

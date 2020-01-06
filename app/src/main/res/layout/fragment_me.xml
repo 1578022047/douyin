@@ -27,6 +27,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/fruit"
                     app:layout_collapseMode="parallax"
+                    android:id="@+id/image_toolbar"
                     />
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -76,7 +77,8 @@
                         android:background="@color/colorButtonBackground"
                         android:text="+ 好友"
                         android:textSize="16dp"
-                        android:textColor="@color/colorWhite" />
+                        android:textColor="@color/colorWhite"
+                        />
                 </LinearLayout>
 
                 <TextView
@@ -94,6 +96,7 @@
                     android:textColor="@color/colorWhite"
                     android:layout_marginLeft="20dp"
                     android:layout_marginBottom="5dp"
+                    android:id="@+id/douyin_id"
                     />
                 <View
                     android:layout_width="match_parent"
@@ -109,7 +112,9 @@
                     android:text="hahahahhah"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/user_info"
+                    />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -120,6 +125,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0 "
+                        android:id="@+id/huozan_num"
                         android:textSize="18dp"
                         android:textColor="@color/colorWhite"
                         android:textStyle="bold"
@@ -135,6 +141,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1 "
+                        android:id="@+id/guanzhu_num"
                         android:textSize="18dp"
                         android:textColor="@color/colorWhite"
                         android:layout_marginLeft="20dp"
@@ -152,6 +159,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="2 "
+                        android:id="@+id/fans_num"
                         android:textColor="@color/colorWhite"
                         android:textSize="18dp"
                         android:layout_marginLeft="20dp"

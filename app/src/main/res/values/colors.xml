@@ -11,6 +11,8 @@
     <color name="colorYellow">#face15</color>
     <color name="colorPrimary">#fafafa</color>
     <color name="colorButtomRed">#fe2c55</color>
+    <color name="colorChangeBrief">#242730</color>
+    <color name="colorChangeHint">#6f7279</color>
 
     <color name="colorPrimaryDark">#c7c7c7</color>
 
