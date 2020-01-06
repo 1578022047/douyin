@@ -1,10 +1,12 @@
-package com.example.dou.viewpage;
+package com.example.dou.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.example.dou.fragment.ViewPagerVideoFragment;
 
 import java.util.List;
 

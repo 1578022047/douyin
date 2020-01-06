@@ -11,22 +11,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.cjt2325.cameralibrary.listener.ClickListener;
 import com.example.dou.R;
 import com.example.dou.adapter.FragmentAdapter;
 import com.example.dou.ui.activity.UserActivity;
-import com.example.dou.viewpage.AddMethodFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class IndexFragment extends Fragment implements View.OnClickListener {
     private FragmentAdapter adapter;
-    private List<AddMethodFragment> list;
-    private CircleImageView user_img;
+    private List<AddMethodFragment> list=new ArrayList<>();
     ViewPager viewPager;
     TabLayout tabLayout;
 
@@ -43,7 +38,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_index,container,false);
         viewPager=view.findViewById(R.id.viewPager);
-        user_img = view.findViewById(R.id.user_image);
 
 //        初始化监听
         initListener();
@@ -55,7 +49,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initListener() {
-        user_img.setOnClickListener(this);
+
     }
 
     private void init() {

@@ -63,7 +63,7 @@ public class VideoPreviewActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mVideoPath = getIntent().getStringExtra("path");
-        mVideoThumb = saveImageToGallery(getVideoThumbnail(mVideoPath,150,150,1),"videoImage");
+        mVideoThumb = getIntent().getStringExtra("thumb");
     }
 
     //获取第一帧缩略图

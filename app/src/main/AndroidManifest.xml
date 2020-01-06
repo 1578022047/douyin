@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.UserInfoActivity"></activity>
+        <activity android:name=".ui.activity.UserInfoActivity"
+            android:label="更多"></activity>
         <activity android:name=".ui.activity.UserActivity" />
         <activity android:name=".ui.activity.RegisterActivity" />
         <activity

@@ -36,7 +36,7 @@ public class ZuopingAdapter extends RecyclerView.Adapter<ZuopingAdapter.ViewHold
         Glide.with(App.sApplication)
                 .load(videos.get(position).getImageUrl())
                 .into(holder.imageView);
-        holder.textView.setText(videos.get(position).getLikeNum());
+        holder.textView.setText(videos.get(position).getLikeNum().toString());
     }
 
     @Override

@@ -13,14 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.dou.R;
-import com.example.dou.viewpage.ViewPagerAdapter;
-import com.example.dou.viewpage.ViewPagerVideoFragment;
+import com.example.dou.adapter.ViewPagerAdapter;
+import com.example.dou.fragment.ViewPagerVideoFragment;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class UserActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -45,9 +44,9 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         toolbarLayout.setTitle("标题可以设置成自己想要的标题");
 
 //        viewpager及tablayout等操作
-        viewPagerVideoFragments.add(new ViewPagerVideoFragment("作品","neirong1"));
-        viewPagerVideoFragments.add(new ViewPagerVideoFragment("动态","neirong2"));
-        viewPagerVideoFragments.add(new ViewPagerVideoFragment("喜欢","neirong3"));
+        viewPagerVideoFragments.add(new ViewPagerVideoFragment("作品","neirong1",null));
+        viewPagerVideoFragments.add(new ViewPagerVideoFragment("动态","neirong2",null));
+        viewPagerVideoFragments.add(new ViewPagerVideoFragment("喜欢","neirong3",null));
         //        设置viewpager适配器，以及添加适配器数据
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),viewPagerVideoFragments);
         viewPager.setAdapter(adapter);

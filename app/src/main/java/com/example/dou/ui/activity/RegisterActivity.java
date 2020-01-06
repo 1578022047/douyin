@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void register() {
-        if (password_editText.getText().toString().equals(repassword_editText.getText().toString())){
+        if (!password_editText.getText().toString().equals(repassword_editText.getText().toString())){
             Toast.makeText(this,"两次输入密码不一致！！！",Toast.LENGTH_SHORT).show();
 //            register();
         }
@@ -92,6 +92,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     User user = new User();
                     user = new Gson().fromJson(result,User.class);
+
 //                    返回的用户对象！！！
                     ((App)getApplication()).setUser(user);
 

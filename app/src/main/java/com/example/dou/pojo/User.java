@@ -5,7 +5,7 @@ public class User {
 
   private String userId;
   private String name;
-  private String phonenum;
+  private String phoneNum;
   private String password;
   private String brief;
   private String birthday;
@@ -21,18 +21,32 @@ public class User {
 
   private Integer sex;
 
-    public User() {
-    }
+  @Override
+  public String toString() {
+    return "User{" +
+            "userId='" + userId + '\'' +
+            ", name='" + name + '\'' +
+            ", phoneNum='" + phoneNum + '\'' +
+            ", password='" + password + '\'' +
+            ", brief='" + brief + '\'' +
+            ", birthday='" + birthday + '\'' +
+            ", imageUrl='" + imageUrl + '\'' +
+            ", sex=" + sex +
+            '}';
+  }
 
-    public User(String userId, String name, String  phonenum, String password, String brief, String birthday, Integer sex) {
-        this.userId = userId;
-        this.name = name;
-        this.phonenum = phonenum;
-        this.password = password;
-        this.brief = brief;
-        this.birthday = birthday;
-        this.sex = sex;
-    }
+  public User(final String userId, final String name, final String phoneNum, final String password, final String brief, final String birthday, final String imageUrl, final Integer sex) {
+    this.userId = userId;
+    this.name = name;
+    this.phoneNum = phoneNum;
+    this.password = password;
+    this.brief = brief;
+    this.birthday = birthday;
+    this.imageUrl = imageUrl;
+    this.sex = sex;
+  }
+
+  public User(){};
 
     public String getUserId() {
     return userId;
@@ -52,13 +66,6 @@ public class User {
   }
 
 
-  public String getPhonenum() {
-    return phonenum;
-  }
-
-  public void setPhonenum(String phonenum) {
-    this.phonenum = phonenum;
-  }
 
 
   public String getPassword() {

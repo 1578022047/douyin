@@ -83,9 +83,8 @@ public class VideoPublishActivity extends AppCompatActivity {
     private void init() {
         videoPath=getIntent().getStringExtra("path");
         videoThumb=getIntent().getStringExtra("thumb");
-        Glide.with(App.sApplication)
-                .load(videoThumb)
-                .into(videoImage);
+        bitmap=getVideoThumbnail(videoPath,150,150,1);
+        videoImage.setImageBitmap(bitmap);
     }
 
     private void initView() {
@@ -123,6 +122,18 @@ public class VideoPublishActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    //获取第一帧缩略图
+    public static Bitmap getVideoThumbnail(String videoPath, int width, int height, int kind) {
+        Bitmap bitmap = null;
+        // 获取视频的缩略图
+        bitmap = ThumbnailUtils.createVideoThumbnail(videoPath, kind); //調用ThumbnailUtils類的靜態方法createVideoThumbnail獲取視頻的截圖；
+        if (bitmap != null) {
+            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
+                    ThumbnailUtils.OPTIONS_RECYCLE_INPUT);//調用ThumbnailUtils類的靜態方法extractThumbnail將原圖片（即上方截取的圖片）轉化為指定大小；
+        }
+        return bitmap;
     }
 
     //将图片保存

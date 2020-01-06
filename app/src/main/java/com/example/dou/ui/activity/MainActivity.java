@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.dou.App;
 import com.example.dou.adapter.IndexFragmentAdapter;
 import com.example.dou.view.NoScrollViewPager;
 import com.example.dou.R;
@@ -82,7 +83,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void isLogin() {
-        startActivity(new Intent(MainActivity.this,VerifyLoginActivity.class));
+        if (((App)getApplication()).getUser()==null){
+            startActivity(new Intent(MainActivity.this,VerifyLoginActivity.class));
+        }
+
     }
     @Override
     public void onClick(final View v) {

@@ -1,35 +1,25 @@
 package com.example.dou.fragment;
 
-import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.dou.R;
 import com.example.dou.RecyclerViewPageChangeListenerHelper;
-import com.example.dou.VideoAdapter;
+import com.example.dou.adapter.VideoAdapter;
+import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
 import com.example.dou.utils.HttpUtil;
-import com.example.dou.viewpage.AddMethodFragment;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import java.io.IOException;
-import java.net.ContentHandler;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +28,8 @@ import okhttp3.Response;
 
 public class AttentionFragment extends AddMethodFragment {
     RecyclerView videoList;
-    List<String> videoUrls;
-    List<String> imageUrls;
-    List<Video> videos;
+    List<Video> videos=new ArrayList<>();
+    List<User> users=new ArrayList<>();
     LinearLayoutManager layoutManager;
     VideoAdapter adapter;
     private String title;
@@ -54,9 +43,13 @@ public class AttentionFragment extends AddMethodFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.attention_fragment,null);
         videoList=view.findViewById(R.id.videoList);
+        initListener();
         initDate();
         initView();
         return view;
+    }
+
+    private void initListener() {
     }
 
 
@@ -65,8 +58,7 @@ public class AttentionFragment extends AddMethodFragment {
         super.onCreate(savedInstanceState);
     }
     private void initDate() {
-        videoUrls = new ArrayList<>();
-        imageUrls=new ArrayList<>();
+
     }
     private void getVideo(){
         String url=HttpUtil.host+"getFiveVideo";
@@ -81,16 +73,9 @@ public class AttentionFragment extends AddMethodFragment {
                 new Handler(getActivity().getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        try {
-                            videos=new Gson().fromJson(response.body().string(),new TypeToken<List<Video>>(){}.getType());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        for(int i=0;i<5;i++) {
-                            imageUrls.add(videos.get(i).getImageUrl());
-                            videoUrls.add(videos.get(i).getVideoUrl());
-                        }
-                        adapter.notifyDataSetChanged();
+//                        videos=new Gson().fromJson()
+//                        users=
+//                        adapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -101,7 +86,7 @@ public class AttentionFragment extends AddMethodFragment {
         pagerSnapHelper.attachToRecyclerView(videoList);
         layoutManager=new LinearLayoutManager(getContext());
         videoList.setLayoutManager(layoutManager);
-        adapter=new VideoAdapter(videoUrls,imageUrls,getContext());
+        adapter=new VideoAdapter(videos,getContext());
         videoList.setAdapter(adapter);
         videoList.getItemAnimator().setChangeDuration(0);
         videoList.setItemAnimator(null);
@@ -123,7 +108,7 @@ public class AttentionFragment extends AddMethodFragment {
                     @Override
                     public void onPageSelected(int position) {
                         adapter.setPlay(position);
-                        if(videoUrls.size()-position<=3){
+                        if(videos.size()-position<=3){
                             getVideo();
                         }
                         curPosition=position;
@@ -134,7 +119,6 @@ public class AttentionFragment extends AddMethodFragment {
     @Override
     public void onPause() {
         super.onPause();
-        adapter.setPlay(-1);
     }
 
     @Override
@@ -148,4 +132,6 @@ public class AttentionFragment extends AddMethodFragment {
     public void onDestroy() {
         super.onDestroy();
     }
+
+
 }

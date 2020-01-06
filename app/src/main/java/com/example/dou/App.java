@@ -15,7 +15,7 @@ import com.example.dou.pojo.User;
 public class App extends Application {
 
     public static Context sApplication;
-    public User user;
+    public User user=null;
 
     public User getUser() {
         return user;

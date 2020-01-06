@@ -1,30 +1,29 @@
-package com.example.dou.viewpage;
+package com.example.dou.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dou.ui.activity.MainActivity;
 import com.example.dou.R;
-import com.example.dou.adapter.ZuopingAdapter;
-import com.example.dou.recycler_pojo.ZuopingPojo;
 
-import java.util.ArrayList;
-import java.util.List;
+public class ViewPagerFansFragment extends Fragment {
 
-public class ViewPagerDongtaiFragment extends Fragment {
     private String title;
     private String content;
     private View view;
-    private List<ZuopingPojo> zuopingPojoList = new ArrayList<>();
 
-    public ViewPagerDongtaiFragment(final String title, final String content) {
+    private final static String TAG = "ViewPagerVideoFragment";
+
+
+    public ViewPagerFansFragment(final String title, final String content) {
         this.title = title;
         this.content = content;
     }
@@ -37,7 +36,7 @@ public class ViewPagerDongtaiFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_view_pager_dongtai,container,false);
+        view = inflater.inflate(R.layout.fragment_view_pager,container,false);
         return view;
     }
 
@@ -45,17 +44,14 @@ public class ViewPagerDongtaiFragment extends Fragment {
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RecyclerView zuoping= view.findViewById(R.id.zuoping_recycler);
-        initData();
-
-        ZuopingAdapter zuopingAdapter = new ZuopingAdapter(zuopingPojoList);
-        GridLayoutManager grid = new GridLayoutManager(getActivity(),3);
-        zuoping.setLayoutManager(grid);
-        zuoping.setAdapter(zuopingAdapter);
-    }
-
-    private void initData() {
-
+        TextView textView = ((MainActivity)getActivity()).findViewById(R.id.text);
+        if (textView==null){
+            Log.e(TAG,"失败");
+        }
+        else {
+            Log.e(TAG,textView.getText().toString());
+        }
+        textView.setText(content);
     }
 
     public String getTitle() {
