@@ -1,8 +1,6 @@
 package com.example.dou.adapter;
 
-
 import android.content.Context;
-
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,22 +10,20 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.bumptech.glide.Glide;
 import com.example.dou.R;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
 import com.example.dou.ui.activity.UserActivity;
+import com.example.dou.ui.activity.UserVideoActivity;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
-import java.io.Serializable;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
-
-    private List<User> users;
+public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.ViewHolder> {
+    User user;
     private int play = 0;
     private List<Video> videos;
     Context context;
@@ -49,9 +45,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         }
     }
 
-    public VideoAdapter(List<Video> videos,List<User> users,Context context) {
-        this.users=users;
+    public UserVideoAdapter(List<Video> videos, User user, Context context) {
         this.videos=videos;
+        this.user=user;
         this.context=context;
     }
 
@@ -71,16 +67,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 viewHolder.heart.setImageResource(R.drawable.redheart);
             }
         });
+        Glide.with(context).load(user.getImageUrl())
+                .into(viewHolder.userImage);
         viewHolder.userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Intent intent=new Intent(context, UserActivity.class);
-                intent.putExtra("userId",users.get(i).getUserId());
-                context.startActivity(intent);
+
             }
         });
-        Glide.with(context).load(users.get(i).getImageUrl())
-                .into(viewHolder.userImage);
         if (play == i) {
             viewHolder.video.setVisibility(View.VISIBLE);
             viewHolder.video.setLooping(true);
@@ -106,3 +100,4 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
 
 }
+
