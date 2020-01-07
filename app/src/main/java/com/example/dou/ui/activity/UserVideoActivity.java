@@ -6,16 +6,23 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 
+import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.RecyclerViewPageChangeListenerHelper;
 import com.example.dou.adapter.UserVideoAdapter;
 import com.example.dou.adapter.VideoAdapter;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
+import com.example.dou.utils.HttpUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class UserVideoActivity extends AppCompatActivity {
     RecyclerView videoList;
@@ -24,6 +31,7 @@ public class UserVideoActivity extends AppCompatActivity {
     LinearLayoutManager layoutManager;
     UserVideoAdapter adapter;
     int index;
+    boolean flag=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +52,33 @@ public class UserVideoActivity extends AppCompatActivity {
         pagerSnapHelper.attachToRecyclerView(videoList);
         layoutManager=new LinearLayoutManager(this);
         videoList.setLayoutManager(layoutManager);
-        adapter=new UserVideoAdapter(videos,user,this);
+        if(user==((App)getApplication()).getUser()){
+            flag=true;
+        }
+        adapter=new UserVideoAdapter(videos,user,flag,this);
+        //判断是否已关注
+
+        String url="";
+        HttpUtil.isAttentionUserHttp(url,((App)getApplication()).getUser().getUserId(),user.getUserId(), new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.body().string().equals("true")){
+                    flag=true;
+                    new Handler(getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        });
+
         adapter.setPlay(index);
         videoList.setAdapter(adapter);
         videoList.getItemAnimator().setChangeDuration(0);

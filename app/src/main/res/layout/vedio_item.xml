@@ -31,6 +31,7 @@
                 android:src="@drawable/fruit" />
 
             <ImageView
+                android:id="@+id/attention"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_centerHorizontal="true"

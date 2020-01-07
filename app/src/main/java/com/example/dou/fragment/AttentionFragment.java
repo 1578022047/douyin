@@ -64,8 +64,8 @@ public class AttentionFragment extends AddMethodFragment {
     private void initDate() {
 
     }
-    private void getVideo(){
-        String url=HttpUtil.host+"getFiveVideo";
+    private void getVideo() {
+        String url = HttpUtil.host + "getFiveVideo";
         HttpUtil.getFiveVideoHttp(url, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -74,24 +74,20 @@ public class AttentionFragment extends AddMethodFragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                Map<String, String> map = null;
+                try {
+                    map = new Gson().fromJson(response.body().string(), Map.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                users.addAll(new Gson().fromJson(map.get("userList"), new TypeToken<List<User>>() {
+                }.getType()));
+                videos.addAll(new Gson().fromJson(map.get("videoList"), new TypeToken<List<Video>>() {
+                }.getType()));
                 new Handler(getActivity().getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        new Handler(getActivity().getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Map<String, String> map = null;
-                                try {
-                                    map = new Gson().fromJson(response.body().string(), Map.class);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                users.addAll(new Gson().fromJson(map.get("userList"),new TypeToken<List<User>>(){}.getType()));
-                                videos.addAll(new Gson().fromJson(map.get("videoList"),new TypeToken<List<Video>>(){}.getType()));
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
-
+                        adapter.notifyDataSetChanged();
                     }
                 });
             }

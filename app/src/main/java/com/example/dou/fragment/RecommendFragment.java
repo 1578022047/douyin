@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.RecyclerViewPageChangeListenerHelper;
 import com.example.dou.adapter.VideoAdapter;
+import com.example.dou.pojo.Flag;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
 import com.example.dou.utils.HttpUtil;
@@ -30,23 +32,25 @@ import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Response;
 
-public class RecommendFragment extends AddMethodFragment  {
+public class RecommendFragment extends AddMethodFragment {
     RecyclerView videoList;
-    List<Video> videos=new ArrayList<>();
+    List<Video> videos = new ArrayList<>();
     LinearLayoutManager layoutManager;
     VideoAdapter adapter;
     private String title;
-    int curPosition=0;
-    private List<User> users=new ArrayList<>();
+    int curPosition = 0;
+    List<Flag> flags=new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     public String getTitle() {
         return "推荐";
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.attention_fragment,null);
-        videoList=view.findViewById(R.id.videoList);
+        View view = inflater.inflate(R.layout.attention_fragment, null);
+        videoList = view.findViewById(R.id.videoList);
         initListener();
         initDate();
         initView();
@@ -61,12 +65,14 @@ public class RecommendFragment extends AddMethodFragment  {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     private void initDate() {
 
     }
-    private void getVideo(){
-        String url=HttpUtil.host+"getFiveVideo";
-        HttpUtil.getFiveVideoHttp(url, new okhttp3.Callback() {
+
+    private void getVideo() {
+        String url = HttpUtil.host + "getFiveVideo";
+        HttpUtil.getFiveVideoHttp(url,((App)getActivity().getApplication()).getUser().getUserId(), new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -74,35 +80,34 @@ public class RecommendFragment extends AddMethodFragment  {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                Map<String, String> map = null;
+                try {
+                    map = new Gson().fromJson(response.body().string(), Map.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                users.addAll(new Gson().fromJson(map.get("userList"), new TypeToken<List<User>>() {
+                }.getType()));
+                videos.addAll(new Gson().fromJson(map.get("videoList"), new TypeToken<List<Video>>() {
+                }.getType()));
+                flags.addAll(new Gson().fromJson(map.get("flagList"), new TypeToken<List<Flag>>() {
+                }.getType()));
                 new Handler(getActivity().getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        new Handler(getActivity().getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                Map<String, String> map = null;
-                                try {
-                                    map = new Gson().fromJson(response.body().string(), Map.class);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                users.addAll(new Gson().fromJson(map.get("userList"),new TypeToken<List<User>>(){}.getType()));
-                                videos.addAll(new Gson().fromJson(map.get("videoList"),new TypeToken<List<Video>>(){}.getType()));
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
-
+                        adapter.notifyDataSetChanged();
                     }
                 });
             }
         });
     }
+
     private void initView() {
         final PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(videoList);
-        layoutManager=new LinearLayoutManager(getContext());
+        layoutManager = new LinearLayoutManager(getContext());
         videoList.setLayoutManager(layoutManager);
-        adapter=new VideoAdapter(videos,users,getContext());
+        adapter = new VideoAdapter(videos, users,flags, getContext());
         videoList.setAdapter(adapter);
         videoList.getItemAnimator().setChangeDuration(0);
         videoList.setItemAnimator(null);
@@ -124,10 +129,10 @@ public class RecommendFragment extends AddMethodFragment  {
                     @Override
                     public void onPageSelected(int position) {
                         adapter.setPlay(position);
-                        if(videos.size()-position<=3){
+                        if (videos.size() - position <= 3) {
                             getVideo();
                         }
-                        curPosition=position;
+                        curPosition = position;
                     }
                 }));
     }
@@ -142,7 +147,6 @@ public class RecommendFragment extends AddMethodFragment  {
     public void onResume() {
         super.onResume();
     }
-
 
 
     @Override

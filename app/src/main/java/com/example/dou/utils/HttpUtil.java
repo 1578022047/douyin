@@ -56,9 +56,10 @@ public class HttpUtil {
 
 
     //获取五个视频
-    public static void getFiveVideoHttp(String address,okhttp3.Callback callback){
+    public static void getFiveVideoHttp(String address,String userId,okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("userId",userId);
         Request request  =new Request.Builder().url(address)
                 .post(requestBody.build())
                 .build();
@@ -87,9 +88,20 @@ public class HttpUtil {
                 .build();
         client.newCall(request).enqueue(callback);
     }
+    //取消点赞
+    public static void CancellikeVideoHttp(String address,String userId,String videoId,okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("userId",userId)
+                .add("videoId",videoId);
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
 
     //关注
-    public static void attentionVideoHttp(String address,String userId,String targetId,okhttp3.Callback callback){
+    public static void attentionUserHttp(String address,String userId,String targetId,okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder requestBody = new FormBody.Builder();
         requestBody.add("userId",userId);
@@ -101,7 +113,7 @@ public class HttpUtil {
     }
 
     //判断是否已关注
-    public static void isAttentionVideoHttp(String address,String userId,String targetId,okhttp3.Callback callback){
+    public static void isAttentionUserHttp(String address,String userId,String targetId,okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder requestBody = new FormBody.Builder();
         requestBody.add("userId",userId);
