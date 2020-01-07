@@ -32,7 +32,7 @@ import okhttp3.Response;
 public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.ViewHolder> {
     User user;
     User me;
-    Flag flag;
+    List<Flag> flags;
     private int play = 0;
     private List<Video> videos;
     Context context;
@@ -56,11 +56,11 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
         }
     }
 
-    public UserVideoAdapter(List<Video> videos, User user ,Flag flag,Context context) {
+    public UserVideoAdapter(List<Video> videos, User user ,List<Flag> flags,Context context) {
         this.videos=videos;
         this.user=user;
         this.context=context;
-        this.flag=flag;
+        this.flags=flags;
     }
 
     @NonNull
@@ -74,7 +74,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        if(user==null) {
+        if(me==null) {
             viewHolder.heart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,14 +82,14 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
                 }
             });
         }else {
-            if (flag.isLikeFlag()) {
+            if (flags.get(i).isLikeFlag()) {
                 viewHolder.heart.setImageResource(R.drawable.redheart);
                 viewHolder.heart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String url="";
+                        String url=HttpUtil.host+"cancelLikeVideo";
                         viewHolder.heart.setImageResource(R.drawable.heart);
-                        flag.setLikeFlag(false);
+                        flags.get(i).setLikeFlag(false);
                         HttpUtil.CancellikeVideoHttp(url,me.getUserId(),videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
@@ -107,9 +107,9 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
                 viewHolder.heart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String url="";
+                        String url=HttpUtil.host+"likeVideo";
                         viewHolder.heart.setImageResource(R.drawable.redheart);
-                        flag.setLikeFlag(true);
+                        flags.get(i).setLikeFlag(true);
                         HttpUtil.likeVideoHttp(url,me.getUserId(),videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
@@ -134,14 +134,14 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
                 }
             });
         }else{
-            if(flag.isAttentionFlag()){
+            if(flags.get(i).isAttentionFlag()){
                 viewHolder.attention.setVisibility(View.GONE);
             }else{
                 viewHolder.attention.setVisibility(View.VISIBLE);
                 viewHolder.attention.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String url="";
+                        String url=HttpUtil.host+"attentionUser";
                         HttpUtil.attentionUserHttp(url,me.getUserId(),user.getUserId(), new okhttp3.Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
@@ -154,7 +154,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
                                     @Override
                                     public void run() {
                                         viewHolder.attention.setVisibility(View.GONE);
-                                        flag.setAttentionFlag(true);
+                                        flags.get(i).setAttentionFlag(true);
                                     }
                                 });
                             }

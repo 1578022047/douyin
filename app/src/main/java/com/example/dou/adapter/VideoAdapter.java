@@ -96,7 +96,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 viewHolder.heart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String url="";
+                        String url=HttpUtil.host+"cancelLikeVideo";;
                         viewHolder.heart.setImageResource(R.drawable.heart);
                         flags.get(i).setLikeFlag(false);
                         HttpUtil.CancellikeVideoHttp(url,user.getUserId(),videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
@@ -116,7 +116,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 viewHolder.heart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String url="";
+                        String url=HttpUtil.host+"likeVideo";;
                         viewHolder.heart.setImageResource(R.drawable.redheart);
                         flags.get(i).setLikeFlag(true);
                         HttpUtil.likeVideoHttp(url,user.getUserId(),videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
@@ -150,7 +150,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 viewHolder.attention.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String url="";
+                        String url=HttpUtil.host+"attentionUser";
                         HttpUtil.attentionUserHttp(url,user.getUserId(),users.get(i).getUserId(), new okhttp3.Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {

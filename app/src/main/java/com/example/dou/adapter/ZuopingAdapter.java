@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.dou.App;
 import com.example.dou.R;
+import com.example.dou.pojo.Flag;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
 import com.example.dou.ui.activity.UserActivity;
@@ -26,10 +27,12 @@ public class ZuopingAdapter extends RecyclerView.Adapter<ZuopingAdapter.ViewHold
     private User user;
     private Context context;
     private List<Video> videos;
+    private List<Flag> flags;
 
-    public ZuopingAdapter(List<Video> videos, User user, Context context){
+    public ZuopingAdapter(List<Video> videos, User user,List<Flag> flags, Context context){
         this.user=user;
         this.context=context;
+        this.flags=flags;
         this.videos = videos;
     }
 
@@ -53,6 +56,7 @@ public class ZuopingAdapter extends RecyclerView.Adapter<ZuopingAdapter.ViewHold
                 Intent intent=new Intent(context, UserVideoActivity.class);
                 intent.putExtra("user",user);
                 intent.putExtra("videoList", (Serializable) videos);
+                intent.putExtra("flagList", (Serializable) flags);
                 intent.putExtra("index",position);
                 context.startActivity(intent);
             }

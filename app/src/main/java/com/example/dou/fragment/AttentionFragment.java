@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.RecyclerViewPageChangeListenerHelper;
 import com.example.dou.adapter.VideoAdapter;
+import com.example.dou.pojo.Flag;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
 import com.example.dou.utils.HttpUtil;
@@ -33,6 +35,7 @@ import okhttp3.Response;
 public class AttentionFragment extends AddMethodFragment {
     RecyclerView videoList;
     List<Video> videos=new ArrayList<>();
+    List<Flag> flags=new ArrayList<>();
     List<User> users=new ArrayList<>();
     LinearLayoutManager layoutManager;
     VideoAdapter adapter;
@@ -66,7 +69,7 @@ public class AttentionFragment extends AddMethodFragment {
     }
     private void getVideo() {
         String url = HttpUtil.host + "getFiveVideo";
-        HttpUtil.getFiveVideoHttp(url, new okhttp3.Callback() {
+        HttpUtil.getFiveVideoHttp(url,((App)getActivity().getApplication()).getUser().getUserId(), new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -84,6 +87,8 @@ public class AttentionFragment extends AddMethodFragment {
                 }.getType()));
                 videos.addAll(new Gson().fromJson(map.get("videoList"), new TypeToken<List<Video>>() {
                 }.getType()));
+                flags.addAll(new Gson().fromJson(map.get("flagList"),new TypeToken<List<Flag>>() {
+                }.getType()));
                 new Handler(getActivity().getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
@@ -98,7 +103,7 @@ public class AttentionFragment extends AddMethodFragment {
         pagerSnapHelper.attachToRecyclerView(videoList);
         layoutManager=new LinearLayoutManager(getContext());
         videoList.setLayoutManager(layoutManager);
-        adapter=new VideoAdapter(videos,users,getContext());
+        adapter=new VideoAdapter(videos,users,flags,getContext());
         videoList.setAdapter(adapter);
         videoList.getItemAnimator().setChangeDuration(0);
         videoList.setItemAnimator(null);
