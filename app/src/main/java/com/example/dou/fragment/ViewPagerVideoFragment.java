@@ -17,6 +17,7 @@ import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.adapter.UserVideoAdapter;
 import com.example.dou.adapter.ZuopingAdapter;
+import com.example.dou.pojo.Flag;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
 import com.example.dou.utils.HttpUtil;
@@ -34,16 +35,18 @@ public class ViewPagerVideoFragment extends Fragment {
     private String content;
     private User user;
     private View view;
-    private List<Video> videos = new ArrayList<>();
+    private List<Video> videos ;
+    private List<Flag> flags ;
     RecyclerView zuoping;
 
     private final static String TAG = "ViewPagerVideoFragment";
 
 
-    public ViewPagerVideoFragment(final String title, final String content, List<Video> videos, User user) {
+    public ViewPagerVideoFragment(final String title, final String content, List<Video> videos,List<Flag> flags, User user) {
         this.title = title;
         this.content = content;
         this.videos= videos;
+        this.flags=flags;
         this.user=user;
     }
 
@@ -67,7 +70,7 @@ public class ViewPagerVideoFragment extends Fragment {
     }
 
     private void initData() {
-        ZuopingAdapter adapter = new ZuopingAdapter(videos,user,getContext());
+        ZuopingAdapter adapter = new ZuopingAdapter(videos,user,flags,getContext());
         GridLayoutManager grid = new GridLayoutManager(getActivity(), 3);
         zuoping.setLayoutManager(grid);
         zuoping.setAdapter(adapter);

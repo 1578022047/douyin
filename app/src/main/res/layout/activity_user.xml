@@ -180,9 +180,9 @@
                         app:tabSelectedTextColor="@color/colorWhite"
                         app:tabIndicatorColor="@color/colorYellow"
                         android:id="@+id/tab_layout"/>
-                    <androidx.viewpager.widget.ViewPager
+                    <com.example.dou.view.WrapContentHeightViewPager
                         android:layout_width="match_parent"
-                        android:layout_height="180dp"
+                        android:layout_height="wrap_content"
                         android:id="@+id/view_pager"/>
                 </LinearLayout>
 

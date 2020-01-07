@@ -51,7 +51,7 @@ public class ViewPagerDongtaiFragment extends Fragment {
         RecyclerView zuoping= view.findViewById(R.id.zuoping_recycler);
         initData();
 
-        ZuopingAdapter zuopingAdapter = new ZuopingAdapter(videos,user,getContext() );
+        ZuopingAdapter zuopingAdapter = new ZuopingAdapter(videos,user,null,getContext() );
         GridLayoutManager grid = new GridLayoutManager(getActivity(),3);
         zuoping.setLayoutManager(grid);
         zuoping.setAdapter(zuopingAdapter);

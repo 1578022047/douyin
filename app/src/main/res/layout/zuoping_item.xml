@@ -2,23 +2,25 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp">
 
 <!--    经过测试，130dp为最佳宽度-->
     <ImageView
         android:id="@+id/zuoping_image"
         android:layout_width="130dp"
-        android:layout_height="160dp"
-         />
+        android:layout_height="150dp"
+        android:scaleType="fitXY"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1.6w"
         android:layout_alignLeft="@id/zuoping_image"
         android:layout_alignBottom="@id/zuoping_image"
-        android:layout_margin="10dp"
         android:textColor="@color/colorWhite"
-        android:textSize="18dp"
-        android:id="@+id/zuoping_num"/>
+        android:textSize="14sp"
+        android:id="@+id/zuoping_num"
+        android:layout_margin="5dp"/>
 
 </RelativeLayout>

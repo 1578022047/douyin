@@ -16,8 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.ChangeUserBriefActivity"
-            android:label="修改简介"></activity>
+        <activity android:name=".ui.activity.ChangeUserInfoActivity"></activity>
+        <activity
+            android:name=".ui.activity.ChangeUserBriefActivity"
+            android:label="修改简介" />
         <activity
             android:name=".ui.activity.UserInfoActivity"
             android:label="更多" />

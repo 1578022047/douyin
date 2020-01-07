@@ -67,10 +67,11 @@ public class HttpUtil {
     }
 
     //获取用户视频以及信息
-    public static void getUserVideoAndInfoHttp(String address,String userId,okhttp3.Callback callback){
+    public static void getUserVideoAndInfoHttp(String address,String myUserId,String userId,okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder requestBody = new FormBody.Builder();
         requestBody.add("userId",userId);
+        requestBody.add("myUserId",myUserId);
         Request request  =new Request.Builder().url(address)
                 .post(requestBody.build())
                 .build();
@@ -101,11 +102,11 @@ public class HttpUtil {
     }
 
     //关注
-    public static void attentionUserHttp(String address,String userId,String targetId,okhttp3.Callback callback){
+    public static void attentionUserHttp(String address,String myUserId,String userId,okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("myUserId",myUserId);
         requestBody.add("userId",userId);
-        requestBody.add("targetId",targetId);
         Request request  =new Request.Builder().url(address)
                 .post(requestBody.build())
                 .build();
@@ -113,11 +114,11 @@ public class HttpUtil {
     }
 
     //判断是否已关注
-    public static void isAttentionUserHttp(String address,String userId,String targetId,okhttp3.Callback callback){
+    public static void isAttentionUserHttp(String address,String myUserId,String userId,okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("myUserId",myUserId);
         requestBody.add("userId",userId);
-        requestBody.add("targetId",targetId);
         Request request  =new Request.Builder().url(address)
                 .post(requestBody.build())
                 .build();

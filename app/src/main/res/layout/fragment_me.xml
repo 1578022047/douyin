@@ -67,7 +67,8 @@
                         android:background="@color/colorButtonBackground"
                         android:text="编辑资料"
                         android:textSize="16dp"
-                        android:textColor="@color/colorWhite" />
+                        android:textColor="@color/colorWhite"
+                        android:id="@+id/changeUserInfo"/>
 
                     <Button
                         android:layout_width="85dp"
@@ -177,8 +178,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="175px"
                     android:orientation="vertical"
+
                     >
                     <com.google.android.material.tabs.TabLayout
                         android:layout_width="match_parent"
@@ -188,9 +192,11 @@
                         app:tabSelectedTextColor="@color/colorWhite"
                         app:tabIndicatorColor="@color/colorYellow"
                         android:id="@+id/tab_layout"/>
-                    <androidx.viewpager.widget.ViewPager
+
+<!--                    ViewPager设置wrap_content无效,从写viewpager方法-->
+                    <com.example.dou.view.WrapContentHeightViewPager
                         android:layout_width="match_parent"
-                        android:layout_height="180dp"
+                        android:layout_height="wrap_content"
                         android:id="@+id/view_pager"/>
                 </LinearLayout>
 

@@ -17,6 +17,7 @@ import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.adapter.ViewPagerAdapter;
 import com.example.dou.fragment.ViewPagerVideoFragment;
+import com.example.dou.pojo.Flag;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
 import com.example.dou.utils.HttpUtil;
@@ -37,6 +38,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
 
     private String userId;
     private User user;
+    User me;
     private List<Video> userVideos=new ArrayList<>();
     private List<Video> likeVideos=new ArrayList<>();
     private Toolbar toolbar;
@@ -45,6 +47,8 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     private CollapsingToolbarLayout toolbarLayout;
     private List<ViewPagerVideoFragment> viewPagerVideoFragments = new ArrayList<>();
     ViewPagerAdapter adapter;
+    private List<Flag> zuopingFlags = new ArrayList<>();
+    private List<Flag> likeZuopingFlags = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +82,16 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void init() {
+        me=((App)getApplication()).getUser();
+        String myId;
+        if(me==null){
+            myId="";
+        }else {
+            myId=me.getUserId();
+        }
         userId=getIntent().getStringExtra("userId");
         String url= HttpUtil.host+"getUserVideoAndInfo";
-        HttpUtil.getUserVideoAndInfoHttp(url, userId, new okhttp3.Callback() {
+        HttpUtil.getUserVideoAndInfoHttp(url, myId,userId, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -98,9 +109,11 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
                             }.getType());
                             likeVideos = new Gson().fromJson(map.get("likeVideoList"), new TypeToken<List<Video>>() {
                             }.getType());
-                            viewPagerVideoFragments.add(new ViewPagerVideoFragment("作品", "neirong1", userVideos,user));
-                            viewPagerVideoFragments.add(new ViewPagerVideoFragment("动态", "neirong2", userVideos,user));
-                            viewPagerVideoFragments.add(new ViewPagerVideoFragment("喜欢", "neirong3", likeVideos,user));
+                            zuopingFlags=new Gson().fromJson(map.get("zuopingFlagList"),new TypeToken<List<Video>>(){}.getType());
+                            likeZuopingFlags=new Gson().fromJson(map.get("likeZuopingFlagList"),new TypeToken<List<Video>>(){}.getType());
+                            viewPagerVideoFragments.add(new ViewPagerVideoFragment("作品", "neirong1", userVideos,zuopingFlags,user));
+                            viewPagerVideoFragments.add(new ViewPagerVideoFragment("动态", "neirong2", userVideos,zuopingFlags,user));
+                            viewPagerVideoFragments.add(new ViewPagerVideoFragment("喜欢", "neirong3", likeVideos,likeZuopingFlags,user));
                             adapter.notifyDataSetChanged();
                         } catch (IOException e) {
                             e.printStackTrace();

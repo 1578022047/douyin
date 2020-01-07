@@ -41,6 +41,7 @@ public class RecommendFragment extends AddMethodFragment {
     int curPosition = 0;
     List<Flag> flags=new ArrayList<>();
     private List<User> users = new ArrayList<>();
+    User user;
 
     public String getTitle() {
         return "推荐";
@@ -67,12 +68,19 @@ public class RecommendFragment extends AddMethodFragment {
     }
 
     private void initDate() {
+        user=((App)getActivity().getApplication()).getUser();
 
     }
 
     private void getVideo() {
         String url = HttpUtil.host + "getFiveVideo";
-        HttpUtil.getFiveVideoHttp(url,((App)getActivity().getApplication()).getUser().getUserId(), new okhttp3.Callback() {
+        String userId;
+        if(user!=null) {
+            userId=user.getUserId();
+        }else{
+            userId="";
+        }
+        HttpUtil.getFiveVideoHttp(url,userId, new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
