@@ -1,5 +1,7 @@
 package com.example.dou.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.dou.App;
 import com.example.dou.R;
+import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
+import com.example.dou.ui.activity.UserActivity;
+import com.example.dou.ui.activity.UserVideoActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class ZuopingAdapter extends RecyclerView.Adapter<ZuopingAdapter.ViewHolder> {
-
+    private User user;
+    private Context context;
     private List<Video> videos;
-    public ZuopingAdapter(List<Video> videos){
+
+    public ZuopingAdapter(List<Video> videos, User user, Context context){
+        this.user=user;
+        this.context=context;
         this.videos = videos;
     }
 
@@ -37,6 +47,16 @@ public class ZuopingAdapter extends RecyclerView.Adapter<ZuopingAdapter.ViewHold
                 .load(videos.get(position).getImageUrl())
                 .into(holder.imageView);
         holder.textView.setText(videos.get(position).getLikeNum().toString());
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                Intent intent=new Intent(context, UserVideoActivity.class);
+                intent.putExtra("user",user);
+                intent.putExtra("videoList", (Serializable) videos);
+                intent.putExtra("index",position);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

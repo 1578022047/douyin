@@ -2,6 +2,7 @@ package com.example.dou.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dou.R;
 import com.example.dou.RecyclerViewPageChangeListenerHelper;
 import com.example.dou.adapter.VideoAdapter;
+import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
 import com.example.dou.utils.HttpUtil;
 import com.google.gson.Gson;
@@ -23,6 +25,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -34,6 +37,7 @@ public class RecommendFragment extends AddMethodFragment  {
     VideoAdapter adapter;
     private String title;
     int curPosition=0;
+    private List<User> users=new ArrayList<>();
 
     public String getTitle() {
         return "推荐";
@@ -73,9 +77,21 @@ public class RecommendFragment extends AddMethodFragment  {
                 new Handler(getActivity().getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
+                        new Handler(getActivity().getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Map<String, String> map = null;
+                                try {
+                                    map = new Gson().fromJson(response.body().string(), Map.class);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                users.addAll(new Gson().fromJson(map.get("userList"),new TypeToken<List<User>>(){}.getType()));
+                                videos.addAll(new Gson().fromJson(map.get("videoList"),new TypeToken<List<Video>>(){}.getType()));
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
 
-
-                        adapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -86,7 +102,7 @@ public class RecommendFragment extends AddMethodFragment  {
         pagerSnapHelper.attachToRecyclerView(videoList);
         layoutManager=new LinearLayoutManager(getContext());
         videoList.setLayoutManager(layoutManager);
-        adapter=new VideoAdapter(videos,getContext());
+        adapter=new VideoAdapter(videos,users,getContext());
         videoList.setAdapter(adapter);
         videoList.getItemAnimator().setChangeDuration(0);
         videoList.setItemAnimator(null);

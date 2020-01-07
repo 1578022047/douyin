@@ -29,6 +29,7 @@
         <activity android:name=".ui.activity.VerifyLogin2Activity" />
         <activity android:name=".ui.activity.VerifyLoginActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.UserVideoActivity" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="">

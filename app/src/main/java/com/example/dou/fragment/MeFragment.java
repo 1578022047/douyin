@@ -28,6 +28,7 @@ import com.example.dou.App;
 import com.example.dou.adapter.ZuopingAdapter;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
+import com.example.dou.ui.activity.ChangeUserBriefActivity;
 import com.example.dou.ui.activity.MainActivity;
 import com.example.dou.adapter.ViewPagerAdapter;
 import com.example.dou.R;
@@ -47,6 +48,8 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 public class MeFragment extends Fragment implements View.OnClickListener {
 
@@ -111,9 +114,20 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onClick(final View v) {
         switch (v.getId()){
             case R.id.user_info:
-                Intent intent = new Intent();
-                startActivity(intent);
+                Intent intent = new Intent(getActivity(), ChangeUserBriefActivity.class);
+                startActivityForResult(intent,1);
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent data) {
+        switch (requestCode){
+            case 1:
+                if (resultCode == RESULT_OK){
+                    String brief = data.getStringExtra("brief");
+                    user_info.setText(brief);
+                }
         }
     }
 

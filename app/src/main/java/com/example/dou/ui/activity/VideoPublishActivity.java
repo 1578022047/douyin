@@ -82,8 +82,8 @@ public class VideoPublishActivity extends AppCompatActivity {
 
     private void init() {
         videoPath=getIntent().getStringExtra("path");
-        videoThumb=getIntent().getStringExtra("thumb");
         bitmap=getVideoThumbnail(videoPath,150,150,1);
+        videoThumb=saveImageToGallery(bitmap,"videoImage");
         videoImage.setImageBitmap(bitmap);
     }
 

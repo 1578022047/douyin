@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.dou.R;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
+import com.example.dou.ui.activity.UserVideoActivity;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
         }
     }
 
-    public UserVideoAdapter(List<Video> videos, User user, Context context) {
+    public UserVideoAdapter(List<Video> videos, User user ,Context context) {
         this.videos=videos;
         this.user=user;
         this.context=context;
@@ -70,7 +71,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
         viewHolder.userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-
+                ((UserVideoActivity)context).finish();
             }
         });
         if (play == i) {

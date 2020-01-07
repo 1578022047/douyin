@@ -23,6 +23,7 @@ public class UserVideoActivity extends AppCompatActivity {
     User user;
     LinearLayoutManager layoutManager;
     UserVideoAdapter adapter;
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +38,38 @@ public class UserVideoActivity extends AppCompatActivity {
     }
     private void initDate() {
         user=(User)getIntent().getSerializableExtra("user");
-        videos= (List<Video>) getIntent().getSerializableExtra("videos");
+        videos= (List<Video>) getIntent().getSerializableExtra("videoList");
+        index=getIntent().getIntExtra("index",0);
         final PagerSnapHelper pagerSnapHelper = new PagerSnapHelper();
         pagerSnapHelper.attachToRecyclerView(videoList);
         layoutManager=new LinearLayoutManager(this);
         videoList.setLayoutManager(layoutManager);
         adapter=new UserVideoAdapter(videos,user,this);
+        adapter.setPlay(index);
         videoList.setAdapter(adapter);
         videoList.getItemAnimator().setChangeDuration(0);
         videoList.setItemAnimator(null);
+        videoList.addOnScrollListener(new RecyclerViewPageChangeListenerHelper(pagerSnapHelper,
+                new RecyclerViewPageChangeListenerHelper.OnPageChangeListener() {
+
+
+                    @Override
+                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                    }
+
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        adapter.setPlay(position);
+                    }
+                }));
+        layoutManager.scrollToPositionWithOffset(index, 0);
+        layoutManager.setStackFromEnd(true);
     }
 
 }

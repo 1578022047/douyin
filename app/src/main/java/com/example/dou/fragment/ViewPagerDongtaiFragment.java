@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dou.App;
 import com.example.dou.R;
 import com.example.dou.adapter.ZuopingAdapter;
+import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class ViewPagerDongtaiFragment extends Fragment {
     private String title;
     private String content;
     private View view;
+    User user;
     private List<Video> videos = new ArrayList<>();
 
     public ViewPagerDongtaiFragment(final String title, final String content) {
@@ -48,14 +51,14 @@ public class ViewPagerDongtaiFragment extends Fragment {
         RecyclerView zuoping= view.findViewById(R.id.zuoping_recycler);
         initData();
 
-        ZuopingAdapter zuopingAdapter = new ZuopingAdapter(videos);
+        ZuopingAdapter zuopingAdapter = new ZuopingAdapter(videos,user,getContext() );
         GridLayoutManager grid = new GridLayoutManager(getActivity(),3);
         zuoping.setLayoutManager(grid);
         zuoping.setAdapter(zuopingAdapter);
     }
 
     private void initData() {
-
+        user=((App)getActivity().getApplication()).getUser();
     }
 
     public String getTitle() {

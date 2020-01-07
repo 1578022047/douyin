@@ -82,12 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         me_textview = findViewById(R.id.me);
     }
 
-    private void isLogin() {
-        if (((App)getApplication()).getUser()==null){
-            startActivity(new Intent(MainActivity.this,VerifyLoginActivity.class));
-        }
 
-    }
     @Override
     public void onClick(final View v) {
         switch (v.getId()){
@@ -108,32 +103,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 me_textview.setTextColor(Color.parseColor("#9e9e9f"));
                 break;
             case R.id.message:
-                isLogin();
-                mainPager.setCurrentItem(2);
-                linearLayout.getBackground().setAlpha(255);
-                message_textview.setTextColor(Color.WHITE);
-                index_textview.setTextColor(Color.parseColor("#9e9e9f"));
-                tongcheng_textview.setTextColor(Color.parseColor("#9e9e9f"));
-                me_textview.setTextColor(Color.parseColor("#9e9e9f"));
+                if (((App)getApplication()).getUser()==null){
+                    startActivity(new Intent(MainActivity.this,VerifyLoginActivity.class));
+                }else {
+                    mainPager.setCurrentItem(2);
+                    linearLayout.getBackground().setAlpha(255);
+                    message_textview.setTextColor(Color.WHITE);
+                    index_textview.setTextColor(Color.parseColor("#9e9e9f"));
+                    tongcheng_textview.setTextColor(Color.parseColor("#9e9e9f"));
+                    me_textview.setTextColor(Color.parseColor("#9e9e9f"));
+                }
                 break;
             case R.id.me:
 //                进入个人主页首先需要判断是否登陆
-                isLogin();
-                mainPager.setCurrentItem(3);
-                linearLayout.getBackground().setAlpha(255);
+                if (((App)getApplication()).getUser()==null){
+                    startActivity(new Intent(MainActivity.this,VerifyLoginActivity.class));
+                }else {
+                    mainPager.setCurrentItem(3);
+                    linearLayout.getBackground().setAlpha(255);
                 /*Toolbar toolbar = findViewById(R.id.toolbar);
                 CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collaps);
                 setSupportActionBar(toolbar);
                 ActionBar actionBar = getSupportActionBar();
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 collapsingToolbarLayout.setTitle("hahha");*/
-                me_textview.setTextColor(Color.WHITE);
-                index_textview.setTextColor(Color.parseColor("#9e9e9f"));
-                tongcheng_textview.setTextColor(Color.parseColor("#9e9e9f"));
-                message_textview.setTextColor(Color.parseColor("#9e9e9f"));
+                    me_textview.setTextColor(Color.WHITE);
+                    index_textview.setTextColor(Color.parseColor("#9e9e9f"));
+                    tongcheng_textview.setTextColor(Color.parseColor("#9e9e9f"));
+                    message_textview.setTextColor(Color.parseColor("#9e9e9f"));
+                }
                 break;
             case R.id.add:
-                startActivity(new Intent(MainActivity.this,RecordActivity.class));
+                if (((App)getApplication()).getUser()==null){
+                    startActivity(new Intent(MainActivity.this,VerifyLoginActivity.class));
+                }else {
+                    startActivity(new Intent(MainActivity.this, RecordActivity.class));
+                }
             default:
                 break;
         }

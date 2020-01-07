@@ -66,43 +66,6 @@ public class VideoPreviewActivity extends BaseActivity {
         mVideoThumb = getIntent().getStringExtra("thumb");
     }
 
-    //获取第一帧缩略图
-    public static Bitmap getVideoThumbnail(String videoPath, int width, int height, int kind) {
-        Bitmap bitmap = null;
-        // 获取视频的缩略图
-        bitmap = ThumbnailUtils.createVideoThumbnail(videoPath, kind); //調用ThumbnailUtils類的靜態方法createVideoThumbnail獲取視頻的截圖；
-        if (bitmap != null) {
-            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
-                    ThumbnailUtils.OPTIONS_RECYCLE_INPUT);//調用ThumbnailUtils類的靜態方法extractThumbnail將原圖片（即上方截取的圖片）轉化為指定大小；
-        }
-        return bitmap;
-    }
-
-    //将图片保存
-
-    public static String saveImageToGallery(Bitmap bmp,String bitName ) {
-        // 首先保存图片
-        File appDir = new File(Environment.getExternalStorageDirectory(),
-                "VideoImage");
-        if (!appDir.exists()) {
-            appDir.mkdir();
-        }
-
-        String fileName = bitName + ".jpg";
-        File file = new File(appDir, fileName);
-
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.flush();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return file.getAbsolutePath();
-    }
 
     @Override
     protected void initView() {
