@@ -14,8 +14,6 @@ import com.bumptech.glide.Glide;
 import com.example.dou.R;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
-import com.example.dou.ui.activity.UserActivity;
-import com.example.dou.ui.activity.UserVideoActivity;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
 import java.util.List;

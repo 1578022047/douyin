@@ -122,18 +122,20 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initInfo() {
-        Glide.with(App.sApplication)
-                .load(user.getImageUrl())
-                .into(me_image);
+        user = ((App)getActivity().getApplication()).getUser();
+        if(user != null){
+            Glide.with(App.sApplication)
+                    .load(user.getImageUrl())
+                    .into(me_image);
 //        设置meimage的src
-        douyinId.setText(user.getUserId());
+            douyinId.setText(user.getUserId());
 
-        user_info.setText(user.getBrief());
+            user_info.setText(user.getBrief());
 
-        Glide.with(App.sApplication)
-                .load(user.getImageUrl())
-                .into(image_toolbar);
-
+            Glide.with(App.sApplication)
+                    .load(user.getImageUrl())
+                    .into(image_toolbar);
+        }
     }
 
     private void initData() {
@@ -153,15 +155,14 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         public void run() {
                             try {
                                 Map<String,String> map=new Gson().fromJson(response.body().string(), Map.class);
-                                user=new Gson().fromJson(map.get("user"),User.class);
                                 userVideos=new Gson().fromJson(map.get("userVideoList"),new TypeToken<List<Video>>(){}.getType());
                                 likeVideos=new Gson().fromJson(map.get("likeVideoList"),new TypeToken<List<Video>>(){}.getType());
                                 new Handler(getActivity().getMainLooper()).post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("作品","neirong1",userVideos));
-                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("动态","neirong2",userVideos));
-                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("喜欢","neirong3",likeVideos));
+                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("作品","neirong1",userVideos,user));
+                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("动态","neirong2",userVideos,user));
+                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("喜欢","neirong3",likeVideos,user));
                                         adapter.notifyDataSetChanged();
                                     }
                                 });
