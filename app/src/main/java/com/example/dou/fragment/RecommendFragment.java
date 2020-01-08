@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.dou.App;
 import com.example.dou.R;
@@ -33,6 +34,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 public class RecommendFragment extends AddMethodFragment {
+    private SwipeRefreshLayout swipeRefresh;
     RecyclerView videoList;
     List<Video> videos = new ArrayList<>();
     LinearLayoutManager layoutManager;
@@ -52,6 +54,17 @@ public class RecommendFragment extends AddMethodFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.attention_fragment, null);
         videoList = view.findViewById(R.id.videoList);
+        swipeRefresh=view.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.colorButtomRed);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                users.clear();
+                videos.clear();
+                flags.clear();
+                getVideo();
+            }
+        });
         initListener();
         initDate();
         initView();
@@ -100,10 +113,10 @@ public class RecommendFragment extends AddMethodFragment {
                 }.getType()));
                 flags.addAll(new Gson().fromJson(map.get("flagList"), new TypeToken<List<Flag>>() {
                 }.getType()));
-                System.out.println("kkkkkkkkk:"+flags);
                 new Handler(getActivity().getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
+                        swipeRefresh.setRefreshing(false);
                         adapter.notifyDataSetChanged();
                     }
                 });

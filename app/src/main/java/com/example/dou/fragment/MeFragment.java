@@ -105,9 +105,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         tabLayout.setupWithViewPager(viewPager);
 
 //        通过请求服务器获得个人信息等
+        initInfo();
         initData();
 //        初始化mefragment信息
-        initInfo();
 //        添加监听事件
         initListener();
         return view;
