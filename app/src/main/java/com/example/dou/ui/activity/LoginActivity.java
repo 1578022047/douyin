@@ -2,6 +2,7 @@ package com.example.dou.ui.activity;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
@@ -31,6 +32,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText phone_num_editText;
     private EditText password_editText;
     private Button login_button;
+
+//    实现自动登陆功能
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editorPref;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         phone_num_editText = findViewById(R.id.phone_num);
         password_editText = findViewById(R.id.password);
         login_button = findViewById(R.id.login_button);
+
+        pref = getPreferences(MODE_PRIVATE);
+        editorPref = pref.edit();
 
         initListener();
     }
@@ -84,6 +92,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (!result.equals("")){
                     User user = new Gson().fromJson(result,User.class);
 //                    返回的用户对象！！！
+
+                    editorPref.putString("userId",user.getUserId());
+                    editorPref.apply();
+
                     ((App)getApplication()).setUser(user);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

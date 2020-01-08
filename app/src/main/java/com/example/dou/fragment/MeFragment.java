@@ -73,7 +73,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private TextView huozan_num;
     private TextView guanzhu_num;
     private TextView fans_num;
-
+    private TextView name;
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +96,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         guanzhu_num = view.findViewById(R.id.guanzhu_num);
         fans_num = view.findViewById(R.id.fans_num);
         changeUserInfo = view.findViewById(R.id.changeUserInfo);
+        name = view.findViewById(R.id.name);
 
         //        设置viewpager适配器，以及添加适配器数据
         adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), zuopingViewPagerFragments);
@@ -138,7 +139,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             case 2:
                 if (resultCode == RESULT_OK){
 //                    不用返回数据应为存在全局app中
-
+                    user = ((App)getActivity().getApplication()).getUser();
+                    user_info.setText(user.getBrief());
+                    name.setText(user.getName());
+                    Glide.with(App.sApplication)
+                            .load(user.getImageUrl())
+                            .into(image_toolbar);
+                    Glide.with(App.sApplication)
+                            .load(user.getImageUrl())
+                            .into(me_image);
                 }
         }
     }
@@ -154,14 +163,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             Glide.with(App.sApplication)
                     .load(user.getImageUrl())
                     .into(me_image);
-//        设置meimage的src
-            douyinId.setText(user.getUserId());
-
-            user_info.setText(user.getBrief());
 
             Glide.with(App.sApplication)
                     .load(user.getImageUrl())
                     .into(image_toolbar);
+//        设置meimage的src
+            douyinId.setText("抖音号:"+user.getUserId().substring(0,12));
+            name.setText(user.getName());
+            user_info.setText(user.getBrief());
+
         }
     }
 
