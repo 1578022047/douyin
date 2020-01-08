@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,8 +35,12 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
     User me;
     List<Flag> flags;
     private int play = 0;
+
+
+
     private List<Video> videos;
     Context context;
+    int numberLike;
     public void setPlay(int play) {
         this.play = play;
         notifyDataSetChanged();
@@ -46,6 +51,8 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
         ImageView heart;
         CircleImageView userImage;
         ImageView attention;
+        TextView likeNum;
+        TextView remarkNum;
 
         public ViewHolder(View view){
             super(view);
@@ -53,6 +60,8 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
             heart=view.findViewById(R.id.heart);
             userImage=view.findViewById(R.id.user_image);
             attention=view.findViewById(R.id.attention);
+            likeNum=view.findViewById(R.id.likeNum);
+            remarkNum=view.findViewById(R.id.remarkNum);
         }
     }
 
@@ -74,7 +83,39 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        if(me==null) {
+        String url=HttpUtil.host+"getLikeVideoNum";
+        HttpUtil.getLikeVideoNumHttp(url,videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
+            @Override
+            public void onFailure(final Call call, final IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(final Call call, final Response response) throws IOException {
+                try {
+                    numberLike=Integer.parseInt(response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                new Handler(context.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(numberLike!=0){
+                            viewHolder.likeNum.setText(String.valueOf(numberLike));
+                        }
+
+                    }
+                });
+            }
+        });
+
+        if(flags.get(i).isLikeFlag()){
+            viewHolder.heart.setImageResource(R.drawable.redheart);
+        }
+        if(flags.get(i).isAttentionFlag()){
+            viewHolder.attention.setVisibility(View.GONE);
+        }
+        if(user==null) {
             viewHolder.heart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,87 +123,81 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.View
                 }
             });
         }else {
-            if (flags.get(i).isLikeFlag()) {
-                viewHolder.heart.setImageResource(R.drawable.redheart);
-                viewHolder.heart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String url=HttpUtil.host+"cancelLikeVideo";
-                        viewHolder.heart.setImageResource(R.drawable.heart);
+            viewHolder.heart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    if(flags.get(i).isLikeFlag()){
+                        numberLike--;
+                        if(numberLike==0){
+                            viewHolder.likeNum.setText("赞");
+                        }else {
+                            viewHolder.likeNum.setText(String.valueOf(numberLike));
+                        }
                         flags.get(i).setLikeFlag(false);
-                        HttpUtil.CancellikeVideoHttp(url,me.getUserId(),videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
+                        viewHolder.heart.setImageResource(R.drawable.heart);
+                        String url=HttpUtil.host+"cancelLikeVideo";
+                        HttpUtil.CancelLikeVideoHttp(url,user.getUserId(),videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
                             @Override
-                            public void onFailure(Call call, IOException e) {
+                            public void onFailure(final Call call, final IOException e) {
 
                             }
 
                             @Override
-                            public void onResponse(Call call, Response response) throws IOException {
+                            public void onResponse(final Call call, final Response response) throws IOException {
 
                             }
                         });
-                    }
-                });
-            } else {
-                viewHolder.heart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String url=HttpUtil.host+"likeVideo";
-                        viewHolder.heart.setImageResource(R.drawable.redheart);
+                    }else{
+                        numberLike++;
+                        viewHolder.likeNum.setText(String.valueOf(numberLike));
                         flags.get(i).setLikeFlag(true);
-                        HttpUtil.likeVideoHttp(url,me.getUserId(),videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
+                        viewHolder.heart.setImageResource(R.drawable.redheart);
+                        String url=HttpUtil.host+"likeVideo";
+                        HttpUtil.likeVideoHttp(url,user.getUserId(),videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
                             @Override
-                            public void onFailure(Call call, IOException e) {
+                            public void onFailure(final Call call, final IOException e) {
 
                             }
 
                             @Override
-                            public void onResponse(Call call, Response response) throws IOException {
+                            public void onResponse(final Call call, final Response response) throws IOException {
 
                             }
                         });
                     }
-                });
-            }
+                }
+            });
         }
-        if(me==null){
-            viewHolder.attention.setVisibility(View.VISIBLE);
+        if(user==null) {
             viewHolder.attention.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     context.startActivity(new Intent(context,VerifyLoginActivity.class));
                 }
             });
-        }else{
-            if(flags.get(i).isAttentionFlag()){
-                viewHolder.attention.setVisibility(View.GONE);
-            }else{
-                viewHolder.attention.setVisibility(View.VISIBLE);
-                viewHolder.attention.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String url=HttpUtil.host+"attentionUser";
-                        HttpUtil.attentionUserHttp(url,me.getUserId(),user.getUserId(), new okhttp3.Callback() {
-                            @Override
-                            public void onFailure(Call call, IOException e) {
+        }else {
+            viewHolder.attention.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    flags.get(i).setAttentionFlag(true);
+                    viewHolder.attention.setVisibility(View.GONE);
+                    String url=HttpUtil.host+"attentionUser";
 
-                            }
+                    HttpUtil.attentionUserHttp(url,me.getUserId(),user.getUserId(), new okhttp3.Callback() {
+                        @Override
+                        public void onFailure(final Call call, final IOException e) {
 
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        viewHolder.attention.setVisibility(View.GONE);
-                                        flags.get(i).setAttentionFlag(true);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            }
+                        }
+
+                        @Override
+                        public void onResponse(final Call call, final Response response) throws IOException {
+
+                        }
+                    });
+                }
+            });
         }
+
         Glide.with(context).load(user.getImageUrl())
                 .into(viewHolder.userImage);
         viewHolder.userImage.setOnClickListener(new View.OnClickListener() {

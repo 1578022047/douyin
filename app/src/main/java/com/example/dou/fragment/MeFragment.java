@@ -1,7 +1,6 @@
 package com.example.dou.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -21,12 +20,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.dou.App;
-import com.example.dou.adapter.ZuopingAdapter;
 import com.example.dou.pojo.Flag;
 import com.example.dou.pojo.User;
 import com.example.dou.pojo.Video;
@@ -40,8 +37,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,12 +56,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private CollapsingToolbarLayout toolbarLayout;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private List<ViewPagerVideoFragment> viewPagerVideoFragments = new ArrayList<>();
+    private List<ZuopingViewPagerFragment> zuopingViewPagerFragments = new ArrayList<>();
     private User user;
     private List<Video> userVideos=new ArrayList<>();
     private List<Video> likeVideos=new ArrayList<>();
-    private List<Flag> zuopingFlags;
-    private List<Flag> likeZuopingFlags;
+    private List<Flag> zuopingFlags=new ArrayList<>();
+    private List<Flag> likeZuopingFlags=new ArrayList<>();
     ViewPagerAdapter adapter;
 
 //    给mefragmnet设置个人信息
@@ -78,6 +73,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private TextView huozan_num;
     private TextView guanzhu_num;
     private TextView fans_num;
+
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +98,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         changeUserInfo = view.findViewById(R.id.changeUserInfo);
 
         //        设置viewpager适配器，以及添加适配器数据
-        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(),viewPagerVideoFragments);
+        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), zuopingViewPagerFragments);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(1);
         viewPager.setOffscreenPageLimit(3);
@@ -165,45 +161,18 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initData() {
-        if(((App)getActivity().getApplication()).getUser()!=null) {
-            String url= HttpUtil.host+"getUserVideoAndInfo";
-            String userId = ((App) getActivity().getApplication()).getUser().getUserId();
-            HttpUtil.getUserVideoAndInfoHttp(url, userId,userId, new okhttp3.Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
                     new Handler(getActivity().getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-                            try {
-                                Map<String,String> map=new Gson().fromJson(response.body().string(), Map.class);
-                                userVideos=new Gson().fromJson(map.get("userVideoList"),new TypeToken<List<Video>>(){}.getType());
-                                likeVideos=new Gson().fromJson(map.get("likeVideoList"),new TypeToken<List<Video>>(){}.getType());
-                                zuopingFlags=new Gson().fromJson(map.get("zuopingFlagList"),new TypeToken<List<Video>>(){}.getType());
-                                likeZuopingFlags=new Gson().fromJson(map.get("likeZuopingFlagList"),new TypeToken<List<Video>>(){}.getType());
-                                new Handler(getActivity().getMainLooper()).post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("作品","neirong1",userVideos,zuopingFlags,user));
-                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("动态","neirong2",userVideos,zuopingFlags,user));
-                                        viewPagerVideoFragments.add(new ViewPagerVideoFragment("喜欢","neirong3",likeVideos,likeZuopingFlags,user));
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                });
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            zuopingViewPagerFragments.add(new ZuopingViewPagerFragment("作品","neirong1",userVideos,zuopingFlags,user));
+                            zuopingViewPagerFragments.add(new ZuopingViewPagerFragment("动态","neirong2",userVideos,zuopingFlags,user));
+                            zuopingViewPagerFragments.add(new ZuopingViewPagerFragment("喜欢","neirong3",likeVideos,likeZuopingFlags,user));
+                            adapter.notifyDataSetChanged();
                         }
                     });
-                }
-            });
-        }
     }
+
+
 
     @Override
     public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
@@ -245,4 +214,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }

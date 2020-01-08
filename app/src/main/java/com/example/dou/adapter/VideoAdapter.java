@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
+import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
@@ -43,6 +45,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     Context context;
     private User user;
     List<Flag> flags;
+    int numberLike=0;
+
 
     public void setPlay(int play) {
         this.play = play;
@@ -54,6 +58,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         ImageView heart;
         CircleImageView userImage;
         ImageView attention;
+        TextView likeNum;
+        TextView remarkNum;
 
 
         public ViewHolder(View view) {
@@ -62,6 +68,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             heart = view.findViewById(R.id.heart);
             userImage = view.findViewById(R.id.user_image);
             attention = view.findViewById(R.id.attention);
+            likeNum=view.findViewById(R.id.likeNum);
+            remarkNum=view.findViewById(R.id.remarkNum);
         }
     }
 
@@ -83,6 +91,42 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        String url=HttpUtil.host+"getLikeVideoNum";
+        HttpUtil.getLikeVideoNumHttp(url,videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
+            @Override
+            public void onFailure(final Call call, final IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(final Call call, final Response response) throws IOException {
+                try {
+                    numberLike=Integer.parseInt(response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                new Handler(context.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(numberLike!=0){
+                            viewHolder.likeNum.setText(String.valueOf(numberLike));
+                        }
+
+                    }
+                });
+            }
+        });
+
+        if(flags.get(i).isLikeFlag()){
+            viewHolder.heart.setImageResource(R.drawable.redheart);
+        }else{
+            viewHolder.heart.setImageResource(R.drawable.heart);
+        }
+        if(flags.get(i).isAttentionFlag()){
+            viewHolder.attention.setVisibility(View.GONE);
+        }else{
+            viewHolder.attention.setVisibility(View.VISIBLE);
+        }
         if(user==null) {
             viewHolder.heart.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -91,86 +135,79 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 }
             });
         }else {
-            if (flags.get(i).isLikeFlag()) {
-                viewHolder.heart.setImageResource(R.drawable.redheart);
-                viewHolder.heart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String url=HttpUtil.host+"cancelLikeVideo";;
-                        viewHolder.heart.setImageResource(R.drawable.heart);
+            viewHolder.heart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    if(flags.get(i).isLikeFlag()){
+                        numberLike--;
+                        if(numberLike==0){
+                            viewHolder.likeNum.setText("赞");
+                        }else {
+                            viewHolder.likeNum.setText(String.valueOf(numberLike));
+                        }
                         flags.get(i).setLikeFlag(false);
-                        HttpUtil.CancellikeVideoHttp(url,user.getUserId(),videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
+                        viewHolder.heart.setImageResource(R.drawable.heart);
+                        String url=HttpUtil.host+"cancelLikeVideo";
+                        HttpUtil.CancelLikeVideoHttp(url,user.getUserId(),videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
                             @Override
-                            public void onFailure(Call call, IOException e) {
+                            public void onFailure(final Call call, final IOException e) {
 
                             }
 
                             @Override
-                            public void onResponse(Call call, Response response) throws IOException {
+                            public void onResponse(final Call call, final Response response) throws IOException {
 
                             }
                         });
-                    }
-                });
-            } else {
-                viewHolder.heart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String url=HttpUtil.host+"likeVideo";;
-                        viewHolder.heart.setImageResource(R.drawable.redheart);
+                    }else{
+                        numberLike++;
+                        viewHolder.likeNum.setText(String.valueOf(numberLike));
                         flags.get(i).setLikeFlag(true);
+                        viewHolder.heart.setImageResource(R.drawable.redheart);
+                        String url=HttpUtil.host+"likeVideo";
                         HttpUtil.likeVideoHttp(url,user.getUserId(),videos.get(i).getVideoId().toString(), new okhttp3.Callback() {
                             @Override
-                            public void onFailure(Call call, IOException e) {
+                            public void onFailure(final Call call, final IOException e) {
 
                             }
 
                             @Override
-                            public void onResponse(Call call, Response response) throws IOException {
+                            public void onResponse(final Call call, final Response response) throws IOException {
 
                             }
                         });
                     }
-                });
-            }
+                }
+            });
         }
-        if(user==null){
-            viewHolder.attention.setVisibility(View.VISIBLE);
+        if(user==null) {
             viewHolder.attention.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     context.startActivity(new Intent(context,VerifyLoginActivity.class));
                 }
             });
-        }else{
-            if(flags.get(i).isAttentionFlag()){
-                viewHolder.attention.setVisibility(View.GONE);
-            }else{
-                viewHolder.attention.setVisibility(View.VISIBLE);
-                viewHolder.attention.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String url=HttpUtil.host+"attentionUser";
-                        HttpUtil.attentionUserHttp(url,user.getUserId(),users.get(i).getUserId(), new okhttp3.Callback() {
-                            @Override
-                            public void onFailure(Call call, IOException e) {
+        }else {
+            viewHolder.attention.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    flags.get(i).setAttentionFlag(true);
+                    viewHolder.attention.setVisibility(View.GONE);
+                    String url=HttpUtil.host+"attentionUser";
 
-                            }
+                    HttpUtil.attentionUserHttp(url,user.getUserId(),users.get(i).getUserId(), new okhttp3.Callback() {
+                        @Override
+                        public void onFailure(final Call call, final IOException e) {
 
-                            @Override
-                            public void onResponse(Call call, Response response) throws IOException {
-                                new Handler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        viewHolder.attention.setVisibility(View.GONE);
-                                        flags.get(i).setAttentionFlag(true);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            }
+                        }
+
+                        @Override
+                        public void onResponse(final Call call, final Response response) throws IOException {
+
+                        }
+                    });
+                }
+            });
         }
 
 
@@ -179,7 +216,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             @Override
             public void onClick(final View v) {
                 Intent intent = new Intent(context, UserActivity.class);
-                intent.putExtra("userId", users.get(i).getUserId());
+                intent.putExtra("user", users.get(i));
                 context.startActivity(intent);
             }
         });

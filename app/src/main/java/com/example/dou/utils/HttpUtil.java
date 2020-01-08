@@ -90,7 +90,7 @@ public class HttpUtil {
         client.newCall(request).enqueue(callback);
     }
     //取消点赞
-    public static void CancellikeVideoHttp(String address,String userId,String videoId,okhttp3.Callback callback){
+    public static void CancelLikeVideoHttp(String address,String userId,String videoId,okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder requestBody = new FormBody.Builder();
         requestBody.add("userId",userId)
@@ -155,6 +155,29 @@ public class HttpUtil {
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder requestBody = new FormBody.Builder();
         requestBody.add("userId",userId);
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //获取点赞数量
+    public static void getLikeVideoNumHttp(String address,String videoId,okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("videoId",videoId);
+        Request request  =new Request.Builder().url(address)
+                .post(requestBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+
+    //获取评论数量
+    public static void getRemarkVideoNumHttp(String address,String videoId,okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder requestBody = new FormBody.Builder();
+        requestBody.add("videoId",videoId);
         Request request  =new Request.Builder().url(address)
                 .post(requestBody.build())
                 .build();

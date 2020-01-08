@@ -6,15 +6,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.dou.fragment.ViewPagerVideoFragment;
+import com.example.dou.fragment.ZuopingViewPagerFragment;
 
 import java.util.List;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    private List<ViewPagerVideoFragment> fragments;
+    private List<ZuopingViewPagerFragment> fragments;
 
-    public ViewPagerAdapter(@NonNull final FragmentManager fm,List<ViewPagerVideoFragment> fragments) {
+    public ViewPagerAdapter(@NonNull final FragmentManager fm,List<ZuopingViewPagerFragment> fragments) {
         super(fm);
         this.fragments = fragments;
     }

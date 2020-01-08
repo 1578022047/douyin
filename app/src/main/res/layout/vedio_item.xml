@@ -46,10 +46,11 @@
             android:src="@drawable/heart" />
 
         <TextView
+            android:id="@+id/likeNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:text="175w"
+            android:text="赞"
             android:textColor="@color/colorWhite" />
 
         <ImageView
@@ -58,10 +59,11 @@
             android:src="@drawable/command" />
 
         <TextView
+            android:id="@+id/remarkNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:text="175w"
+            android:text="评论"
             android:textColor="@color/colorWhite" />
 
         <ImageView

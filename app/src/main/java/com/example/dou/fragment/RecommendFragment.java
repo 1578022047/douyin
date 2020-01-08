@@ -100,6 +100,7 @@ public class RecommendFragment extends AddMethodFragment {
                 }.getType()));
                 flags.addAll(new Gson().fromJson(map.get("flagList"), new TypeToken<List<Flag>>() {
                 }.getType()));
+                System.out.println("kkkkkkkkk:"+flags);
                 new Handler(getActivity().getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
@@ -148,7 +149,6 @@ public class RecommendFragment extends AddMethodFragment {
     @Override
     public void onPause() {
         super.onPause();
-        adapter.setPlay(-1);
     }
 
     @Override

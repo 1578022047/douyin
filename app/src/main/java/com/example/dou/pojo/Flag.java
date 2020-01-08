@@ -11,6 +11,14 @@ public class Flag implements Serializable {
         this.attentionFlag = attentionFlag;
     }
 
+    @Override
+    public String toString() {
+        return "Flag{" +
+                "likeFlag=" + likeFlag +
+                ", attentionFlag=" + attentionFlag +
+                '}';
+    }
+
     public boolean isLikeFlag() {
         return likeFlag;
     }

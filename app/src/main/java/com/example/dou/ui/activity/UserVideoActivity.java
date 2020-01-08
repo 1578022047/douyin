@@ -83,4 +83,8 @@ public class UserVideoActivity extends AppCompatActivity {
         layoutManager.setStackFromEnd(true);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

@@ -3,7 +3,11 @@ package com.example.dou;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.dou.pojo.Flag;
 import com.example.dou.pojo.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author LLhon
@@ -16,6 +20,15 @@ public class App extends Application {
 
     public static Context sApplication;
     public User user=null;
+    public List<Flag> flags=new ArrayList<>();
+
+    public List<Flag> getFlags() {
+        return flags;
+    }
+
+    public void setFlags(final List<Flag> flags) {
+        this.flags = flags;
+    }
 
     public User getUser() {
         return user;

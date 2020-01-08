@@ -20,7 +20,7 @@ public class ViewPagerFansFragment extends Fragment {
     private String content;
     private View view;
 
-    private final static String TAG = "ViewPagerVideoFragment";
+    private final static String TAG = "ZuopingViewPagerFragment";
 
 
     public ViewPagerFansFragment(final String title, final String content) {
