@@ -83,7 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:hint="请输入昵称"
-            android:background="@color/colorTopBlack" />
+            android:background="@color/colorTopBlack"
+            android:id="@+id/name"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -101,6 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorTopBlack"
+            android:id="@+id/brief"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -119,24 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorTopBlack"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="学校"
-            android:textColor="@color/colorWhite"
-            />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="20dp"
-        >
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorTopBlack"
+            android:id="@+id/sex"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -156,11 +141,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorTopBlack"
+            android:id="@+id/birthday"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="地区"
+            android:text="生日"
             android:textColor="@color/colorWhite"
             />
     </RelativeLayout>

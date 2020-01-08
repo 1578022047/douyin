@@ -105,9 +105,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         tabLayout.setupWithViewPager(viewPager);
 
 //        通过请求服务器获得个人信息等
-        initData();
-//        初始化mefragment信息
         initInfo();
+//        初始化mefragment信息
+        initData();
 //        添加监听事件
         initListener();
         return view;
@@ -134,6 +134,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 if (resultCode == RESULT_OK){
                     String brief = data.getStringExtra("brief");
                     user_info.setText(brief);
+                }
+            case 2:
+                if (resultCode == RESULT_OK){
+//                    不用返回数据应为存在全局app中
+
                 }
         }
     }
