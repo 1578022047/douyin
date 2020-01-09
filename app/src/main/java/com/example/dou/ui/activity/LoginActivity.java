@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         password_editText = findViewById(R.id.password);
         login_button = findViewById(R.id.login_button);
 
-        pref = getPreferences(MODE_PRIVATE);
+        pref = getSharedPreferences("userData",MODE_PRIVATE);
         editorPref = pref.edit();
 
         initListener();

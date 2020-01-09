@@ -1,6 +1,9 @@
 package com.example.dou.fragment;
 
+import android.app.job.JobInfo;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -34,6 +37,7 @@ import com.example.dou.adapter.ViewPagerAdapter;
 import com.example.dou.R;
 import com.example.dou.utils.HttpUtil;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -51,6 +55,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class MeFragment extends Fragment implements View.OnClickListener {
 
+    private NavigationView nav_view;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private CollapsingToolbarLayout toolbarLayout;
@@ -74,6 +79,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private TextView guanzhu_num;
     private TextView fans_num;
     private TextView name;
+
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +105,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         fans_num = view.findViewById(R.id.fans_num);
         changeUserInfo = view.findViewById(R.id.changeUserInfo);
         name = view.findViewById(R.id.name);
+        nav_view = view.findViewById(R.id.nav_view);
+        pref = getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE);
+        editor = pref.edit();
 
         //        设置viewpager适配器，以及添加适配器数据
         adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), zuopingViewPagerFragments);
@@ -155,6 +166,29 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private void initListener() {
         user_info.setOnClickListener(this);
         changeUserInfo.setOnClickListener(this);
+        nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull final MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.logout:
+                        Logout();
+                        break;
+                }
+                return true;
+            }
+
+            private void Logout() {
+                editor.putString("userId","0");
+                editor.apply();
+
+                ((App)getActivity().getApplication()).setUser(null);
+                drawerLayout.closeDrawers();
+                Intent intent = new Intent(getActivity(),MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+
+        });
     }
 
     private void initInfo() {

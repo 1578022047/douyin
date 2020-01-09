@@ -212,7 +212,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        app:menu="@menu/me_nav_menu"/>
+        app:menu="@menu/me_nav_menu"
+        android:id="@+id/nav_view"
+        />
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

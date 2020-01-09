@@ -89,6 +89,8 @@ public class ChangeUserInfoActivity extends AppCompatActivity implements View.On
 //        通过http改变数据库数据
         String userJson = new Gson().toJson(user);
         String url = HttpUtil.host+"changeUserInfo?user="+userJson;
+//        json数据访问出错，应该使用post方法把
+        System.out.println("changeUserInfo:"+url);
         HttpUtil.sendGetHttpRequest(url, new okhttp3.Callback() {
             @Override
             public void onFailure(final Call call, final IOException e) {

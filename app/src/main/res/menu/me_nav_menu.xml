@@ -21,6 +21,9 @@
             android:icon="@mipmap/ic_launcher"
             android:title="Task"
             />
-
+        <item android:id="@+id/logout"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Logout"
+            />
     </group>
 </menu>

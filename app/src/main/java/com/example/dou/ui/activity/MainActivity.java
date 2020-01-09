@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
-    //        初始化fragment，只new一次fragment增强效率
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void autoLogin() {
-        pref = getPreferences(MODE_PRIVATE);
+        pref = getSharedPreferences("userData",MODE_PRIVATE);
         editor = pref.edit();
         if (!pref.getString("userId","0").equals("0")){
             String url=HttpUtil.host+"/getUser?userId="+pref.getString("userId","0");
@@ -154,12 +153,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }else {
                     mainPager.setCurrentItem(3);
                     linearLayout.getBackground().setAlpha(255);
-                /*Toolbar toolbar = findViewById(R.id.toolbar);
-                CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collaps);
-                setSupportActionBar(toolbar);
-                ActionBar actionBar = getSupportActionBar();
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                collapsingToolbarLayout.setTitle("hahha");*/
                     me_textview.setTextColor(Color.WHITE);
                     index_textview.setTextColor(Color.parseColor("#9e9e9f"));
                     tongcheng_textview.setTextColor(Color.parseColor("#9e9e9f"));

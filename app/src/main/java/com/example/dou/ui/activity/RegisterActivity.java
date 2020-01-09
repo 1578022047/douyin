@@ -3,6 +3,7 @@ package com.example.dou.ui.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText repassword_editText;
     private Button register_button;
 
+    private SharedPreferences pref;
+    private SharedPreferences.Editor prefEditor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         repassword_editText = findViewById(R.id.repassword);
         register_button = findViewById(R.id.register_button);
 
+        pref = getSharedPreferences("userData",MODE_PRIVATE);
+        prefEditor = pref.edit();
         initListener();
 
     }
@@ -93,6 +99,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     User user = new User();
                     user = new Gson().fromJson(result,User.class);
 
+                    prefEditor.putString("userId",user.getUserId());
+                    prefEditor.apply();
 //                    返回的用户对象！！！
                     ((App)getApplication()).setUser(user);
 
