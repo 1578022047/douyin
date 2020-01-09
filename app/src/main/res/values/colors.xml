@@ -29,4 +29,6 @@
     <color name="ff666666">#666666</color>
 
     <color name="alpha_white_70">#4Dffffff</color>
+
+    <color name="transparent_gray_light">#89000000</color>
 </resources>
